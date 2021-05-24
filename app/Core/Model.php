@@ -63,11 +63,16 @@ class Model implements DbModelInterface
      */
     public function sort($params)
     {
-        $sql = $this->sql . 'order by price asc, qty asc';
-        echo $sql;
-        echo '<br>';
+        $sqlByOrderParams = [];
 
-        var_dump($params);
+        foreach ($params as $field => $typeSort) {
+            $sqlByOrderParams[] = "{$field} {$typeSort}";
+        }
+
+        if (count($sqlByOrderParams) > 0) {
+            $this->sql = $this->sql . ' order by ' . implode(',', $sqlByOrderParams);
+        }
+
 
         return $this;
     }

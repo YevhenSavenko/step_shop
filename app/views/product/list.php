@@ -7,7 +7,7 @@
         <option <?php echo filter_input(INPUT_POST, 'sortsecond') === 'qty_ASC' ? 'selected' : ''; ?> value="qty_ASC">по зростанню кількості</option>
         <option <?php echo filter_input(INPUT_POST, 'sortsecond') === 'qty_DESC' ? 'selected' : ''; ?> value="qty_DESC">по спаданню кількості</option>
     </select>
-    <input type="submit" value="Submit">
+    <input name="sortproduct" type="submit" value="Submit">
 </form>
 
 <div class="product">

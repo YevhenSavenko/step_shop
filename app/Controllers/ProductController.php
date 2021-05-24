@@ -22,17 +22,6 @@ class ProductController extends Controller
     {
         $this->set('title', "Товари");
 
-        // $model = $this->getModel('Product');
-        // $model->initCollection();
-        // $model->sort($model->getSortParams());
-
-        // var_dump($model);
-
-        // echo '<br><br>';
-
-        // var_dump($this->getModel('Product')->initCollection()->sort($this->getSortParams()));
-        // exit;
-
         $products = $this->getModel('Product')
             ->initCollection()
             ->sort($this->getSortParams())
@@ -99,17 +88,22 @@ class ProductController extends Controller
     public function getSortParams()
     {
         $params = [];
-        $sortfirst = filter_input(INPUT_POST, 'sortfirst');
-        if ($sortfirst === "price_DESC") {
-            $params['price'] = 'DESC';
-        } else {
-            $params['price'] = 'ASC';
-        }
-        $sortsecond = filter_input(INPUT_POST, 'sortsecond');
-        if ($sortsecond === "qty_DESC") {
-            $params['qty'] = 'DESC';
-        } else {
-            $params['qty'] = 'ASC';
+        $sortproduct = filter_input(INPUT_POST, 'sortproduct');
+
+        if (isset($sortproduct) && !empty($sortproduct)) {
+
+            $sortfirst = filter_input(INPUT_POST, 'sortfirst');
+            if ($sortfirst === "price_DESC") {
+                $params['price'] = 'desc';
+            } else {
+                $params['price'] = 'asc';
+            }
+            $sortsecond = filter_input(INPUT_POST, 'sortsecond');
+            if ($sortsecond === "qty_DESC") {
+                $params['qty'] = 'desc';
+            } else {
+                $params['qty'] = 'asc';
+            }
         }
 
         return $params;
