@@ -1,14 +1,39 @@
 .sku {
-    color: grey;
+  color: grey;
 }
 
 .product {
-    border: dotted 1px gray;
-    margin:20px;
-    padding: 20px;
+  border: dotted 1px gray;
+  margin: 20px 0;
+  padding: 20px;
 }
 
 .price {
-    color: red;
-    font-size: 22px;
+  color: red;
+  font-size: 22px;
+}
+
+.navigate-link a {
+  display: block;
+  padding: 20px 25px;
+  color: rgba(255, 255, 255, 0.55);
+  text-decoration: none;
+  transition: color 0.15s, background 0.25s;
+  border-radius: 5px;
+}
+
+.navigate-link a:hover {
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.header-shop {
+  background: #e2e2e2;
+  padding: 100px 0;
+}
+
+.header-shop h1 {
+  font-size: 55px;
+  letter-spacing: 3px;
 }

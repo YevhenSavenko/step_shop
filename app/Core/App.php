@@ -38,6 +38,7 @@ class App
         }
         $action = Route::getAction() . 'Action';
         $controller = new $controllerClass();
+
         if (!method_exists($controller, $action)) {
             $controller = new \Controllers\ErrorController();
             $action = 'error404Action';
