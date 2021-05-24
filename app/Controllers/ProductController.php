@@ -90,7 +90,7 @@ class ProductController extends Controller
         $params = [];
         $sortproduct = filter_input(INPUT_POST, 'sortproduct');
 
-        if (isset($sortproduct) && !empty($sortproduct)) {
+        if (isset($sortproduct)) {
 
             $sortfirst = filter_input(INPUT_POST, 'sortfirst');
             if ($sortfirst === "price_DESC") {
