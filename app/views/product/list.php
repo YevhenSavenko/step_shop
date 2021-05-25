@@ -16,13 +16,15 @@
                 </div>
             </div>
         </div>
-        <input name="sortproduct" class="btn btn-dark col-md-3" type="submit" value="Сортувати">
+        <input name="sortproduct" class="btn-submit btn btn-dark col-md-3" type="submit" value="Сортувати">
     </div>
 </form>
 
 <div class="product">
-    <p>
-        <?= \Core\Url::getLink('/product/add', 'Додати товар'); ?>
+    <p class="text-center my-3 row justify-content-center">
+        <span class="btn-add col-md-3">
+            <?= \Core\Url::getLink('/product/add', 'Додати товар'); ?>
+        </span>
     </p>
 </div>
 

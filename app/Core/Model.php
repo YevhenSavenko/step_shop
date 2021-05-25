@@ -142,6 +142,7 @@ class Model implements DbModelInterface
                 $values[$column] = $column_value;
             }
         }
+
         return $values;
     }
 

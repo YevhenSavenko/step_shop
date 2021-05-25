@@ -75,10 +75,13 @@ class ProductController extends Controller
     {
 
         $model = $this->getModel('Product');
+        $columns = implode(',', $model->getColumns());
         $this->set("title", "Додавання товару");
         if ($values = $model->getPostValues()) {
-            $model->addItem($values);
+            $values = $model->validValues($values);
+            $model->addItem($values, $columns);
         }
+
         $this->renderLayout();
     }
 
