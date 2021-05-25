@@ -71,3 +71,11 @@
 .btn-add a:hover {
   color: #e2e2e2;
 }
+
+.wrapper-links .edit-link a {
+  text-decoration: none;
+}
+
+.wrapper-links .delete-link a {
+  color: red;
+}

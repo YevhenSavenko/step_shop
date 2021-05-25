@@ -1,3 +1,20 @@
+<?php if (isset($_GET['status'])) : ?>
+    <div class="row justify-content-center mt-4">
+        <div class="alert alert-success text-center col-md-5" role="alert">
+            <?php switch ($_GET['status']):
+                case 'ok_edit': ?>
+                    Редагування успішне
+                <?php break;
+                case 'ok_add': ?>
+                    Додавання успішне
+                <?php break;
+                default: ?>
+                    <?php break ?>
+            <?php endswitch ?>
+        </div>
+    </div>
+<?php endif ?>
+
 <form class="my-4" method="POST" action="<?php $_SERVER['PHP_SELF']; ?>">
     <div class="row justify-content-between">
         <div class="col-md-6">
@@ -23,7 +40,7 @@
 <div class="product">
     <p class="text-center my-3 row justify-content-center">
         <span class="btn-add col-md-3">
-            <?= \Core\Url::getLink('/product/add', 'Додати товар'); ?>
+            <?= \Core\Url::getLink('/product/add', 'Додати товар +'); ?>
         </span>
     </p>
 </div>
@@ -43,8 +60,13 @@ foreach ($products as $product) :
                 <p><?php if (!$product['qty'] > 0) {
                         echo 'Нема в наявності';
                     } ?></p>
-                <p>
-                    <?= \Core\Url::getLink('/product/edit', 'Редагувати', array('id' => $product['id'])); ?>
-                </p>
+                <div class="wrapper-links row">
+                    <div class="edit-link col-md-2">
+                        <?= \Core\Url::getLink('/product/edit', 'Редагувати', array('id' => $product['id'])); ?>
+                    </div>
+                    <div class="delete-link col-md-2">
+                        <?= \Core\Url::getLink('/product/delete', 'Видалити', array('id' => $product['id'])); ?>
+                    </div>
+                </div>
     </div>
 <?php endforeach; ?>

@@ -117,10 +117,37 @@ class Model implements DbModelInterface
      */
     public function getItem($id)
     {
-        $sql = "select * from $this->table_name where $this->id_column = ?;";
+        $sql = "select * from $this->table_name where $this->id_column = ? limit 1;";
         $db = new DB();
         $params = array($id);
-        return $db->query($sql, $params)[0];
+        $result = $db->query($sql, $params);
+
+        if ($result) {
+            return $result[0];
+        } else {
+            return 0;
+        }
+    }
+
+    public function updateItem($values, $columns, $id)
+    {
+        $params = [];
+        $sql = "update $this->table_name set ";
+
+        foreach ($values as $key => $value) {
+            foreach ($columns as $index => $column) {
+                if ($key === $column) {
+                    $sql .= "{$column} = :{$column},";
+                    $params[":{$column}"] = $value;
+                }
+            }
+        }
+
+        $sql = trim($sql, ',') . " where id = :id";
+        $params[':id'] = $id;
+
+        $db = new DB();
+        $db->query($sql, $params);
     }
 
     /**

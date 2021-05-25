@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Core\Controller;
+use Core\Helper;
 use Core\View;
 
 /**
@@ -55,15 +56,26 @@ class ProductController extends Controller
     public function editAction()
     {
         $model = $this->getModel('Product');
+        $columns = $model->getColumns();
         $this->set('saved', 0);
         $this->set("title", "Редагування товару");
-        $id = filter_input(INPUT_POST, 'id');
+        $this->set('id', '');
+        $id = $this->getId();
         if ($id) {
-            $values = $model->getPostValues();
-            $this->set('saved', 1);
-            $model->saveItem($id, $values);
+            if ($model->getItem($id)) {
+                $this->set('product', $model->getItem($id));
+                $this->set('saved', 1);
+            } else {
+                $this->set('id', $id);
+            }
         }
-        $this->set('product', $model->getItem($this->getId()));
+
+        $edit = filter_input(INPUT_POST, 'edited');
+        if ($edit) {
+            $values = $model->validValues($model->getPostValues());
+            $model->updateItem($values, $columns, $id);
+            Helper::redirect('/product/list?status=ok_edit');
+        }
 
         $this->renderLayout();
     }
@@ -80,6 +92,7 @@ class ProductController extends Controller
         if ($values = $model->getPostValues()) {
             $values = $model->validValues($values);
             $model->addItem($values, $columns);
+            Helper::redirect('/product/list?status=ok_add');
         }
 
         $this->renderLayout();
@@ -162,6 +175,6 @@ class ProductController extends Controller
             return NULL;
         }
         */
-        return filter_input(INPUT_GET, 'id');
+        return filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
     }
 }
