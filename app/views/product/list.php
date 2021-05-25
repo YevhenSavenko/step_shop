@@ -27,8 +27,7 @@
     </div>
 <?php endif ?>
 
-<?php $path = (explode('?', $_SERVER['PHP_SELF'])) ?>
-<form class="my-4" method="POST" action="<?= $path[0] ?>">
+<form class="my-4" method="POST" action="<?= Core\Route::getBasePath() . $_SERVER['REQUEST_URI'] ?>">
     <div class="row justify-content-between">
         <div class="col-md-6">
             <div class="row">
