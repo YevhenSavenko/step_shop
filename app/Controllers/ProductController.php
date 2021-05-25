@@ -64,6 +64,7 @@ class ProductController extends Controller
         if ($id) {
             if ($model->getItem($id)) {
                 $this->set('headding', 'Редагування товару');
+                $this->set('btn', 'Редагувати');
                 $this->set('product', $model->getItem($id));
                 $this->set('saved', 1);
             } else {
@@ -83,11 +84,11 @@ class ProductController extends Controller
 
     public function addAction()
     {
-
         $model = $this->getModel('Product');
-        $columns = implode(',', $model->getColumns());
+        $columns = $model->getColumns();
         $this->set("title", "Додавання товару");
         $this->set('headding', 'Додавання товару');
+        $this->set('btn', 'Додати');
         if ($values = $model->getPostValues()) {
             $values = $model->validValues($values);
             $model->addItem($values, $columns);
@@ -95,6 +96,26 @@ class ProductController extends Controller
         }
 
         $this->renderLayout();
+    }
+
+    public function deleteAction()
+    {
+        $model = $this->getModel('Product');
+        $id = $this->getId();
+
+        if ($id) {
+            if ($model->getItem($id)) {
+                $fieldId = $model->getColumns();
+                $model->deleteItem($fieldId[0], $id);
+                Helper::redirect('/product/list?status=ok_delete');
+                return;
+            } else {
+                Helper::redirect('/product/list?status=no_delete');
+                return;
+            }
+        }
+
+        Helper::redirect('/product/list');
     }
 
     /**

@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-12 text-center mt-5">
-            <input name="edited" type="submit" class="btn-submit btn btn-dark col-md-6 py-2" value="Редагувати товар">
+            <input name="edited" type="submit" class="btn-submit btn btn-dark col-md-6 py-2" value="<?= $this->get('btn') ?>">
         </div>
     </form>
 

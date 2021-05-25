@@ -129,6 +129,28 @@ class Model implements DbModelInterface
         }
     }
 
+    public function addItem($values, $columns)
+    {
+        $sql = "insert into $this->table_name ";
+        $fieldsName = [];
+        $valuesFields = [];
+        $params = [];
+
+        foreach ($values as $key => $value) {
+            foreach ($columns as $index => $column) {
+                if ($key === $column) {
+                    $fieldsName[] = $column;
+                    $valuesFields[] = ":{$key}";
+                    $params[":{$key}"] = $value;
+                }
+            }
+        }
+
+        $sql .= '(' . implode(',',  $fieldsName) . ') values (' .  implode(',',  $valuesFields) . ');';
+        $db = new DB();
+        $db->query($sql, $params);
+    }
+
     public function updateItem($values, $columns, $id)
     {
         $params = [];
@@ -143,11 +165,20 @@ class Model implements DbModelInterface
             }
         }
 
-        $sql = trim($sql, ',') . " where id = :id";
+        $sql = trim($sql, ',') . " where {$columns[0]} = :id";
+
         $params[':id'] = $id;
 
         $db = new DB();
         $db->query($sql, $params);
+    }
+
+    public function deleteItem($key,  $id)
+    {
+        $sql = "delete from $this->table_name where $key = :id";
+
+        $db = new DB();
+        $db->query($sql, [':id' => $id]);
     }
 
     /**

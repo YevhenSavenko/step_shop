@@ -38,35 +38,4 @@ class Product extends Model
 
         return $data;
     }
-
-    public function addItem($values, $columns)
-    {
-        $sql = "insert into $this->table_name ($columns) 
-        values (null, :sku, :name, :price, :qty, null);";
-
-        $db = new DB();
-        $params = array(':sku' => $values['sku'], ':name' => $values['name'], ':price' => $values['price'], ':qty' => $values['qty']);
-        $db->query($sql, $params);
-    }
-
-    public function updateItem($values, $columns, $id)
-    {
-        $params = [];
-        $sql = "update $this->table_name set ";
-
-        foreach ($values as $key => $value) {
-            foreach ($columns as $index => $column) {
-                if ($key === $column) {
-                    $sql .= "{$column} = :{$column},";
-                    $params[":{$column}"] = $value;
-                }
-            }
-        }
-
-        $sql = trim($sql, ',') . " where id = :id";
-        $params[':id'] = $id;
-
-        $db = new DB();
-        $db->query($sql, $params);
-    }
 }
