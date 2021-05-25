@@ -63,6 +63,7 @@ class ProductController extends Controller
         $id = $this->getId();
         if ($id) {
             if ($model->getItem($id)) {
+                $this->set('headding', 'Редагування товару');
                 $this->set('product', $model->getItem($id));
                 $this->set('saved', 1);
             } else {
@@ -80,15 +81,13 @@ class ProductController extends Controller
         $this->renderLayout();
     }
 
-    /**
-     *
-     */
     public function addAction()
     {
 
         $model = $this->getModel('Product');
         $columns = implode(',', $model->getColumns());
         $this->set("title", "Додавання товару");
+        $this->set('headding', 'Додавання товару');
         if ($values = $model->getPostValues()) {
             $values = $model->validValues($values);
             $model->addItem($values, $columns);
