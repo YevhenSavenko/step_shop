@@ -27,7 +27,7 @@
     </div>
 <?php endif ?>
 
-<form class="my-4" method="POST" action="<?= Core\Route::getBasePath() . $_SERVER['REQUEST_URI'] ?>">
+<form class="my-4" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
     <div class="row justify-content-between">
         <div class="col-md-6">
             <div class="row">

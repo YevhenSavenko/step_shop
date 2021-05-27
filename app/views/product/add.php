@@ -4,7 +4,7 @@
     </h2>
 </div>
 <div class="row justify-content-center mt-5">
-    <form class="row col-md-6 needs-validation" method="POST" action="<?php $_SERVER['PHP_SELF'] ?>">
+    <form class="row col-md-6 needs-validation" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
         <div class="col-md-6">
             <label for="validationCustom01" class="form-label">Код товара:</label>
             <input name="sku" type="text" class="form-control" id="validationCustom01" value="<?= $product['sku'] ?? '' ?>" required>
