@@ -165,7 +165,7 @@ class Model implements DbModelInterface
             }
         }
 
-        $sql = trim($sql, ',') . " where {$columns[0]} = :id";
+        $sql = trim($sql, ',') . " where {$this->id_column} = :id";
 
         $params[':id'] = $id;
 
@@ -173,12 +173,14 @@ class Model implements DbModelInterface
         $db->query($sql, $params);
     }
 
-    public function deleteItem($key,  $id)
+    public function deleteItem()
     {
-        $sql = "delete from $this->table_name where $key = :id";
+        // $sql = "delete from $this->table_name where $key = :id";
+        // $db = new DB();
+        // $db->query($sql, [':id' => $id]);
 
         $db = new DB();
-        $db->query($sql, [':id' => $id]);
+        $db->deleteEntity($this);
     }
 
     /**
@@ -216,6 +218,6 @@ class Model implements DbModelInterface
 
     public function getId()
     {
-        return 1;
+        return filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
     }
 }

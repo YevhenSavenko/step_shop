@@ -3,6 +3,7 @@
 namespace Controllers;
 
 use Core\Controller;
+use Core\DB;
 use Core\Helper;
 use Core\View;
 
@@ -103,16 +104,15 @@ class ProductController extends Controller
         $model = $this->getModel('Product');
         $id = $this->getId();
 
-        if ($id) {
-            if ($model->getItem($id)) {
-                $fieldId = $model->getColumns();
-                $model->deleteItem($fieldId[0], $id);
-                Helper::redirect('/product/list?status=ok_delete');
-                return;
-            } else {
-                Helper::redirect('/product/list?status=no_delete');
-                return;
-            }
+        if ($id && $model->getItem($id)) {
+            $model->deleteItem();
+            // $fieldId = $model->getColumns();
+            // $model->deleteItem($fieldId[0], $id);
+            Helper::redirect('/product/list?status=ok_delete');
+            return;
+        } else {
+            Helper::redirect('/product/list?status=no_delete');
+            return;
         }
 
         Helper::redirect('/product/list');
