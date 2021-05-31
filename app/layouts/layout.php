@@ -16,7 +16,7 @@
         </div>
     </div>
 
-    <div id="header" class="mb-4">
+    <div id="header" class="pb-4">
         <?= $this->get('menu'); ?>
     </div>
     <div class="container">

@@ -10,8 +10,9 @@
   }
   100% {
     opacity: 0;
-    transform: translateX(-10000%);
-    max-height: 0px;
+    max-height: 0;
+    transform: translateY(-10000%);
+    display: none !important;
   }
 }
 
