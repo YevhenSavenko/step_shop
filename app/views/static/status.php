@@ -1,5 +1,5 @@
 <?php if (isset($_GET['status'])) : ?>
-    <div class="row justify-content-center my-5">
+    <div class="row justify-content-center status__modal modal__show">
         <?php switch ($_GET['status']):
             case 'ok_edit': ?>
                 <div class="alert alert-success text-center col-md-5" role="alert">

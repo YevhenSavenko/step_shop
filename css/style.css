@@ -1,3 +1,20 @@
+@keyframes hide {
+  0% {
+    opacity: 1;
+    max-height: 100%;
+  }
+  35% {
+    opacity: 0;
+    transform: translateY(-100%);
+    max-height: 0;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(-10000%);
+    max-height: 0px;
+  }
+}
+
 .sku {
   color: grey;
 }
@@ -78,4 +95,12 @@
 
 .wrapper-links .delete-link a {
   color: red;
+}
+
+.modal__show {
+  display: block;
+}
+
+.modal__hide {
+  animation: hide 2s forwards;
 }
