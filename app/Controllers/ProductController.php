@@ -31,6 +31,8 @@ class ProductController extends Controller
             ->select();
         $this->set('products', $products);
 
+        $this->getModel('Product')->getLastID();
+
         $this->renderLayout();
     }
 
@@ -92,8 +94,9 @@ class ProductController extends Controller
         $this->set('btn', 'Додати');
         if ($values = $model->getPostValues()) {
             $values = $model->validValues($values);
-            $model->addItem($values, $columns);
-            Helper::redirect('/product/list?status=ok_add');
+            $id = $model->addItem($values, $columns)->getLastId();
+            // Helper::redirect('/product/list?status=ok_add');
+            Helper::redirect("/product/edit?id={$id}&status=ok_add");
         }
 
         $this->renderLayout();
@@ -109,13 +112,11 @@ class ProductController extends Controller
             // $fieldId = $model->getColumns();
             // $model->deleteItem($fieldId[0], $id);
             Helper::redirect('/product/list?status=ok_delete');
-            return;
         } else {
             Helper::redirect('/product/list?status=no_delete');
-            return;
         }
 
-        Helper::redirect('/product/list');
+        // Helper::redirect('/product/list');
     }
 
     /**

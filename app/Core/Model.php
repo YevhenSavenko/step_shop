@@ -149,6 +149,8 @@ class Model implements DbModelInterface
         $sql .= '(' . implode(',',  $fieldsName) . ') values (' .  implode(',',  $valuesFields) . ');';
         $db = new DB();
         $db->query($sql, $params);
+
+        return $this;
     }
 
     public function updateItem($values, $columns, $id)
@@ -204,6 +206,16 @@ class Model implements DbModelInterface
         }
 
         return $values;
+    }
+
+    public function getLastID()
+    {
+        $sql = "select max({$this->id_column}) as id from {$this->table_name};";
+
+        $db = new DB();
+        $id = $db->query($sql)[0]['id'];
+
+        return $id;
     }
 
     public function getTableName(): string
