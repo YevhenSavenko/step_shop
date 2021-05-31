@@ -173,6 +173,8 @@ class Model implements DbModelInterface
 
         $db = new DB();
         $db->query($sql, $params);
+
+        return $this;
     }
 
     public function deleteItem()
@@ -183,6 +185,8 @@ class Model implements DbModelInterface
 
         $db = new DB();
         $db->deleteEntity($this);
+
+        return $this;
     }
 
     /**
@@ -216,6 +220,18 @@ class Model implements DbModelInterface
         $id = $db->query($sql)[0]['id'];
 
         return $id;
+    }
+
+    public function initStatus($status = '', $body = '')
+    {
+        if ($status && $body) {
+            $_SESSION['alerts']['messages']['status'] = $status;
+            $_SESSION['alerts']['messages']['body'] = $body;
+        } else {
+            unset($_SESSION['alerts']);
+        }
+
+        return $this;
     }
 
     public function getTableName(): string

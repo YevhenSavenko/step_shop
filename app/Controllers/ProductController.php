@@ -31,9 +31,9 @@ class ProductController extends Controller
             ->select();
         $this->set('products', $products);
 
-        $this->getModel('Product')->getLastID();
-
+        $model = $this->getModel('Product');
         $this->renderLayout();
+        $model->initStatus();
     }
 
     /**
@@ -78,11 +78,14 @@ class ProductController extends Controller
         $edit = filter_input(INPUT_POST, 'edited');
         if ($edit) {
             $values = $model->validValues($model->getPostValues());
-            $model->updateItem($values, $columns, $id);
-            Helper::redirect('/product/list?status=ok_edit');
+            $model->updateItem($values, $columns, $id)->initStatus(1, 'Редагування відбулось успішно');
+
+            Helper::redirect('/product/list');
+            return;
         }
 
         $this->renderLayout();
+        $model->initStatus();
     }
 
     public function addAction()
@@ -95,8 +98,9 @@ class ProductController extends Controller
         if ($values = $model->getPostValues()) {
             $values = $model->validValues($values);
             $id = $model->addItem($values, $columns)->getLastId();
+            $model->initStatus(1, 'Додавання товару є успішним');
             // Helper::redirect('/product/list?status=ok_add');
-            Helper::redirect("/product/edit?id={$id}&status=ok_add");
+            Helper::redirect("/product/edit?id={$id}");
         }
 
         $this->renderLayout();
@@ -108,15 +112,14 @@ class ProductController extends Controller
         $id = $this->getId();
 
         if ($id && $model->getItem($id)) {
-            $model->deleteItem();
+            $model->deleteItem()->initStatus(1, 'Видалення товару успішне');;
             // $fieldId = $model->getColumns();
             // $model->deleteItem($fieldId[0], $id);
-            Helper::redirect('/product/list?status=ok_delete');
         } else {
-            Helper::redirect('/product/list?status=no_delete');
+            $model->initStatus(2, 'Такого товару не існує');
         }
 
-        // Helper::redirect('/product/list');
+        Helper::redirect('/product/list');
     }
 
     /**
@@ -127,7 +130,7 @@ class ProductController extends Controller
         $params = [];
         $sortproduct = filter_input(INPUT_POST, 'sortproduct');
 
-        if (isset($sortproduct)) {
+        if ($sortproduct) {
             $sortfirst = filter_input(INPUT_POST, 'sortfirst');
 
             if ($sortfirst === "price_DESC") {
