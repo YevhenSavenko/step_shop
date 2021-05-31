@@ -1,4 +1,6 @@
-<?php use Core\View; ?>
+<?php
+
+use Core\View; ?>
 <?php require_once View::getViewDir() . \DS . 'static' . \DS . 'status.php'; ?>
 
 <form class="my-4" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
@@ -35,24 +37,24 @@
 
 $products =  $this->get('products');
 
-foreach ($products as $product) :
-?>
-
+foreach ($products as $product) : ?>
     <div class="product">
         <p class="sku">Код: <?php echo $product['sku'] ?></p>
-        <h4><?php echo $product['name'] ?><h4>
-                <p> Ціна: <span class="price"><?php echo $product['price'] ?></span> грн</p>
-                <p> Кількість: <?php echo $product['qty'] ?></p>
-                <p><?php if (!$product['qty'] > 0) {
-                        echo 'Нема в наявності';
-                    } ?></p>
-                <div class="wrapper-links row">
-                    <div class="edit-link col-md-2">
-                        <?= \Core\Url::getLink('/product/edit', 'Редагувати', array('id' => $product['id'])); ?>
-                    </div>
-                    <div class="delete-link col-md-2">
-                        <?= \Core\Url::getLink('/product/delete', 'Видалити', array('id' => $product['id'])); ?>
-                    </div>
-                </div>
+        <h4><?php echo $product['name'] ?></h4>
+        <p> Ціна: <span class="price"><?php echo $product['price'] ?></span> грн</p>
+        <p> Кількість: <?php echo $product['qty'] ?></p>
+        <p><?php if (!$product['qty'] > 0) {
+                echo 'Нема в наявності';
+            } ?></p>
+
+        <p class="sku"> Опис: <?= !empty($product['description']) ? htmlspecialchars_decode($product['description']) : 'Опис відсутній для даного товару' ?></p>
+        <div class="wrapper-links row">
+            <div class="edit-link col-md-2">
+                <?= \Core\Url::getLink('/product/edit', 'Редагувати', array('id' => $product['id'])); ?>
+            </div>
+            <div class="delete-link col-md-2">
+                <?= \Core\Url::getLink('/product/delete', 'Видалити', array('id' => $product['id'])); ?>
+            </div>
+        </div>
     </div>
 <?php endforeach; ?>

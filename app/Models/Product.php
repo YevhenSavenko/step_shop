@@ -26,6 +26,8 @@ class Product extends Model
         $data['name'] = filter_var($data['name'], FILTER_SANITIZE_SPECIAL_CHARS);
         $data['qty'] = filter_var($data['qty'], FILTER_SANITIZE_NUMBER_INT);
         $data['price'] = filter_var($data['price'], FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $data['description'] = htmlspecialchars($data['description']);
+
 
         if ($data['price'] < 0) {
             $data['price'] = 0;
