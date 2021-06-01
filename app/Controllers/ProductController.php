@@ -23,15 +23,20 @@ class ProductController extends Controller
     public function listAction()
     {
         $this->set('title', "Товари");
+        $model = $this->getModel('Product');
+        $maxPrice = $model->getMaxValue('price');
+        $this->set('maxPrice', $maxPrice);
 
-        $products = $this->getModel('Product')
+        $products = $model
             ->initCollection()
+            ->filter($model->getDiapasoneValue())
             ->sort($this->getSortParams())
             ->getCollection()
             ->select();
         $this->set('products', $products);
 
-        $model = $this->getModel('Product');
+        // $model->filter($model->getDiapasoneValue());
+
         $this->renderLayout();
         $model->initStatus();
     }
@@ -97,8 +102,8 @@ class ProductController extends Controller
         $this->set('btn', 'Додати');
         if ($values = $model->getPostValues()) {
             $values = $model->validValues($values);
-            $id = $model->addItem($values, $columns)->getLastId();
-            $model->initStatus(1, 'Додавання товару є успішним');
+            $id = $model->addItem($values, $columns)->getMaxValue('id');
+            $model->initStatus(1, 'Успішне додавання товару');
             // Helper::redirect('/product/list?status=ok_add');
             Helper::redirect("/product/edit?id={$id}");
         }
@@ -112,7 +117,7 @@ class ProductController extends Controller
         $id = $this->getId();
 
         if ($id && $model->getItem($id)) {
-            $model->deleteItem()->initStatus(1, 'Видалення товару успішне');;
+            $model->deleteItem()->initStatus(1, 'Товар успішно видалено');;
             // $fieldId = $model->getColumns();
             // $model->deleteItem($fieldId[0], $id);
         } else {
@@ -128,25 +133,23 @@ class ProductController extends Controller
     public function getSortParams()
     {
         $params = [];
-        $sortproduct = filter_input(INPUT_POST, 'sortproduct');
 
-        if ($sortproduct) {
-            $sortfirst = filter_input(INPUT_POST, 'sortfirst');
+        $sortfirst = filter_input(INPUT_POST, 'sortfirst');
 
-            if ($sortfirst === "price_DESC") {
-                $params['price'] = 'desc';
-            } else {
-                $params['price'] = 'asc';
-            }
-
-            $sortsecond = filter_input(INPUT_POST, 'sortsecond');
-
-            if ($sortsecond === "qty_DESC") {
-                $params['qty'] = 'desc';
-            } else {
-                $params['qty'] = 'asc';
-            }
+        if ($sortfirst === "price_DESC") {
+            $params['price'] = 'desc';
+        } else {
+            $params['price'] = 'asc';
         }
+
+        $sortsecond = filter_input(INPUT_POST, 'sortsecond');
+
+        if ($sortsecond === "qty_DESC") {
+            $params['qty'] = 'desc';
+        } else {
+            $params['qty'] = 'asc';
+        }
+
 
         return $params;
     }

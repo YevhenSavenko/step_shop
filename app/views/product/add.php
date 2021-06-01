@@ -23,7 +23,7 @@
         </div>
         <div class="col-md-12 mt-4">
             <label for="validationCustom05" class="form-label">Опис:</label>
-            <textarea name="description" type="text" class="form-control" id="validationCustom05" rows="5" required><?= htmlspecialchars_decode($product['description']) ?? '' ?></textarea>
+            <textarea name="description" type="text" class="form-control" id="validationCustom05" rows="5" required><?= !empty($product['description']) ? htmlspecialchars_decode($product['description']) : '' ?></textarea>
         </div>
 
 

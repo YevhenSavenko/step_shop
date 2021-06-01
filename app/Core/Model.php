@@ -84,6 +84,7 @@ class Model implements DbModelInterface
     {
     }
 
+
     /**
      * @return $this
      */
@@ -92,6 +93,7 @@ class Model implements DbModelInterface
         $db = new DB();
         $this->sql .= ";";
         $this->collection = $db->query($this->sql, $this->params);
+
         return $this;
     }
 
@@ -212,14 +214,14 @@ class Model implements DbModelInterface
         return $values;
     }
 
-    public function getLastID()
+    public function getMaxValue($field)
     {
-        $sql = "select max({$this->id_column}) as id from {$this->table_name};";
+        $sql = "select max($field) as max from {$this->table_name};";
 
         $db = new DB();
-        $id = $db->query($sql)[0]['id'];
+        $max = $db->query($sql)[0]['max'];
 
-        return $id;
+        return $max;
     }
 
     public function initStatus($status = '', $body = '')

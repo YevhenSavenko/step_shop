@@ -40,4 +40,25 @@ class Product extends Model
 
         return $data;
     }
+
+    public function getDiapasoneValue()
+    {
+
+        $minPrice = filter_input(INPUT_POST, 'min-price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+        $maxPrice = filter_input(INPUT_POST, 'max-price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+
+        return ['min' => $minPrice, 'max' => $maxPrice];
+    }
+
+    public function filter($params)
+    {
+        if ($params['min'] || $params['min'] == 0 && $params['max']) {
+            $where = ' where price >= ? && price <= ? ';
+
+            $this->sql = $this->sql . $where;
+            $this->params = [$params['min'], $params['max']];
+        }
+
+        return $this;
+    }
 }
