@@ -1,7 +1,6 @@
-<?php
-
-use Core\Route;
-use Core\View;
+<?php 
+    use Core\Route;
+    use Core\View;
 ?>
 
 <?php require_once View::getViewDir() . \DS . 'static' . \DS . 'status.php'; ?>

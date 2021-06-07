@@ -47,12 +47,16 @@ class Model implements DbModelInterface
      */
     public function getColumns()
     {
-        $db = new DB();
-        $sql = "show columns from  $this->table_name;";
-        $results = $db->query($sql);
-        foreach ($results as $result) {
-            array_push($this->columns, $result['Field']);
+        if (!$this->columns) {
+            $db = new DB();
+            $sql = "show columns from  $this->table_name;";
+
+            $results = $db->query($sql);
+            foreach ($results as $result) {
+                array_push($this->columns, $result['Field']);
+            }
         }
+
         return $this->columns;
     }
 
@@ -82,6 +86,27 @@ class Model implements DbModelInterface
      */
     public function filter($params)
     {
+        $sqlСondition = '';
+        $paramsQuery = [];
+
+        if ($params) {
+            $sqlСondition = ' where ';
+            foreach ($params as $key => $vlaue) {
+                $lastKey = array_key_last($params);
+                $sqlСondition .= " {$key} = ?";
+
+                if ($key !== $lastKey) {
+                    $sqlСondition .= " and";
+                }
+
+                $paramsQuery[] = $vlaue;
+            }
+        }
+
+        $this->sql .= $sqlСondition;
+        $this->params = $paramsQuery;
+
+        return $this;
     }
 
 
@@ -91,6 +116,7 @@ class Model implements DbModelInterface
     public function getCollection()
     {
         $db = new DB();
+
         $this->sql .= ";";
         $this->collection = $db->query($this->sql, $this->params);
 
@@ -149,6 +175,7 @@ class Model implements DbModelInterface
         }
 
         $sql .= '(' . implode(',',  $fieldsName) . ') values (' .  implode(',',  $valuesFields) . ');';
+
         $db = new DB();
         $db->query($sql, $params);
 

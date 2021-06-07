@@ -190,3 +190,27 @@ input[type="range"]::-webkit-slider-thumb {
 .min_input {
   text-align: center;
 }
+
+.input__register:focus {
+  border: 1px solid #212529 !important;
+  box-shadow: 0px 0px 5px #212529 !important;
+}
+
+.input__register:focus::placeholder {
+  color: #212529;
+  font-weight: 500;
+}
+
+.btn__submit {
+  padding: 11px 0 !important;
+  text-transform: uppercase;
+  font-weight: 700 !important;
+  font-size: 14px !important;
+  letter-spacing: 2px;
+  transition: background 0.5s ease-out;
+}
+
+.btn__submit:hover {
+  background: #212529f3 !important;
+  color: #ffffffb9 !important;
+}
