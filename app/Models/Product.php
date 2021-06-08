@@ -43,12 +43,20 @@ class Product extends Model
 
     public function getDiapasoneValue()
     {
-
         $minPrice = filter_input(INPUT_POST, 'min-price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
         $maxPrice = filter_input(INPUT_POST, 'max-price', FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
 
+        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+            setcookie('min', $minPrice, 0, '/', '', 0, 1);
+            setcookie('max', $maxPrice, 0, '/', '', 0, 1);
+        } else {
+            $minPrice = isset($_COOKIE['min']) ? $_COOKIE['min'] : $minPrice;
+            $maxPrice = isset($_COOKIE['max']) ? $_COOKIE['max'] : $maxPrice;
+        }
+
         return ['min' => $minPrice, 'max' => $maxPrice];
     }
+
 
     public function filter($params)
     {

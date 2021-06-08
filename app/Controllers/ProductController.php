@@ -134,22 +134,16 @@ class ProductController extends Controller
     {
         $params = [];
 
-        $sortfirst = filter_input(INPUT_POST, 'sortfirst');
+        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+            filter_input(INPUT_POST, 'sortfirst') === "price_DESC" ? $params['price'] = 'desc' : $params['price'] = 'asc';
+            filter_input(INPUT_POST, 'sortsecond') === "qty_DESC" ? $params['qty'] = 'desc' : $params['qty'] = 'asc';
 
-        if ($sortfirst === "price_DESC") {
-            $params['price'] = 'desc';
-        } else {
-            $params['price'] = 'asc';
+            setcookie('price', $params['price'], 0, '/', '', 0, 1);
+            setcookie('qty', $params['qty'], 0, '/', '', 0, 1);
+        } else if (isset($_COOKIE['price']) && isset($_COOKIE['qty'])) {
+            $params['price'] = $_COOKIE['price'];
+            $params['qty'] = $_COOKIE['qty'];
         }
-
-        $sortsecond = filter_input(INPUT_POST, 'sortsecond');
-
-        if ($sortsecond === "qty_DESC") {
-            $params['qty'] = 'desc';
-        } else {
-            $params['qty'] = 'asc';
-        }
-
 
         return $params;
     }
