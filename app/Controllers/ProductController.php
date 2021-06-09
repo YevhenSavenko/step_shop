@@ -29,13 +29,11 @@ class ProductController extends Controller
 
         $products = $model
             ->initCollection()
-            ->filter($model->getDiapasoneValue())
+            ->filterProduct($model->getDiapasoneValue())
             ->sort($this->getSortParams())
             ->getCollection()
             ->select();
         $this->set('products', $products);
-
-        // $model->filter($model->getDiapasoneValue());
 
         $this->renderLayout();
         $model->initStatus();
@@ -50,10 +48,10 @@ class ProductController extends Controller
 
         $product = $this->getModel('Product')
             ->initCollection()
-            ->filter(['id', $this->getId()])
+            ->filter(['id' => $this->getId()])
             ->getCollection()
             ->selectFirst();
-        $this->set('products', $product);
+        $this->set('product', $product);
 
         $this->renderLayout();
     }

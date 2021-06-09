@@ -58,7 +58,7 @@ use Core\View; ?>
 <?php $products =  $this->get('products') ?>
 
 <?php if ($products) : ?>
-    <?php foreach ($products as $product) : ?>
+    <!-- <?php foreach ($products as $product) : ?>
         <div class="product">
             <p class="sku">Код: <?php echo $product['sku'] ?></p>
             <h4><?php echo $product['name'] ?></h4>
@@ -78,7 +78,47 @@ use Core\View; ?>
                 </div>
             </div>
         </div>
-    <?php endforeach; ?>
+    <?php endforeach; ?> -->
+
+
+    <div class="catalog">
+        <div>
+            <h2 class="catalog__title">Каталог</h2>
+        </div>
+        <div class="catalog__product">
+            <?php foreach ($products as $product) : ?>
+                <div class="product__item">
+                    <div class="absolute__link">
+                        <?= \Core\Url::getLink('/product/view', '', array('id' => $product['id'])); ?>
+                    </div>
+                    <div class="sku">
+                        Код: <?= $product['sku'] ?>
+                    </div>
+                    <div class="empty">
+                        <div class="image">
+                            Empty block
+                        </div>
+                    </div>
+                    <div class="title">
+                        <?= $product['name'] ?>
+                    </div>
+                    <div class="qty">
+                        <?= $product['qty'] > 0 ? 'Залишилося: ' . '<b>' . (int)$product['qty'] . '</b>' : 'Нема в наявності' ?>
+                    </div>
+                    <div class="row__action">
+                        <div class="price">
+                            <?= $product['price'] ?> <span>₴</span>
+                        </div>
+                        <div class="wrapper-links row">
+                            <div class="in-basket">
+                                <?= \Core\Url::getLink('#', '<i class="bi bi-cart-plus"></i>', array('id' => $product['id'])); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach ?>
+        </div>
+    </div>
 <?php else : ?>
     <div class="row text-center my-5 fs-1 fw-bolder">
         <div class="py-5">

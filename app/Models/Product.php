@@ -58,7 +58,7 @@ class Product extends Model
     }
 
 
-    public function filter($params)
+    public function filterProduct($params)
     {
         if ($params['min'] || $params['min'] == 0 && $params['max']) {
             $where = ' where price >= ? && price <= ? ';
