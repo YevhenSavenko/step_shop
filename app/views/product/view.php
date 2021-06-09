@@ -4,7 +4,11 @@
     </h4>
 </div>
 
-<?php if ($product) : ?>
+<?php
+
+use Core\Helper;
+
+if ($product) : ?>
 
     <div class="view">
         <div class="view__product">
@@ -27,7 +31,7 @@
             </div>
             <div class="price-product view__descript">
                 <div class="price-product left__column">Ціна</div>
-                <div class="right__column"><?= $product['price'] ?><span>₴</span></div>
+                <div class="right__column"><?= $product['price'] ?> <span>₴</span></div>
             </div>
             <div class="descript">
                 <div class="descript-product">Опис:</div>
@@ -36,9 +40,15 @@
                 </div>
             </div>
             <div class="wrapper-view-links">
-                <div class="in-view-basket">
-                    <?= \Core\Url::getLink('#', 'В корзину', array('id' => $product['id'])); ?>
-                </div>
+                <?php if (Helper::inBasket($product['id'])) : ?>
+                    <div class="in-view-basket">
+                        <?= \Core\Url::getLink('/#####', '<span>В корзині</span><i class="bi bi-check2"></i>'); ?>
+                    </div>
+                <?php else : ?>
+                    <div class="no-view-basket">
+                        <?= \Core\Url::getLink('/basket/add', 'В корзину', array('id' => $product['id'])); ?>
+                    </div>
+                <?php endif ?>
                 <div class="edit-link">
                     <?= \Core\Url::getLink('/product/edit', 'Редагувати', array('id' => $product['id'])); ?>
                 </div>

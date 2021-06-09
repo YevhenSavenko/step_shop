@@ -39,4 +39,15 @@ class Helper
         $model = new $name();
         return $model;
     }
+
+    public static function inBasket($id)
+    {
+        if (isset($_SESSION['products']['basket']['id'])) {
+            if (in_array($id, $_SESSION['products']['basket']['id'])) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use Core\Helper;
 use Core\View; ?>
 <?php require_once View::getViewDir() . \DS . 'static' . \DS . 'status.php'; ?>
 
@@ -80,7 +81,7 @@ use Core\View; ?>
         </div>
     <?php endforeach; ?> -->
 
-
+    <?php var_dump($_SESSION) ?>
     <div class="catalog">
         <div>
             <h2 class="catalog__title">Каталог</h2>
@@ -110,9 +111,15 @@ use Core\View; ?>
                             <?= $product['price'] ?> <span>₴</span>
                         </div>
                         <div class="wrapper-links row">
-                            <div class="in-basket">
-                                <?= \Core\Url::getLink('#', '<i class="bi bi-cart-plus"></i>', array('id' => $product['id'])); ?>
-                            </div>
+                            <?php if (Helper::inBasket($product['id']) === 1) : ?>
+                                <div class="in-basket">
+                                    <?= \Core\Url::getLink('/######', '<i class="bi bi-cart-check"></i>'); ?>
+                                </div>
+                            <?php else : ?>
+                                <div class="no-basket">
+                                    <?= \Core\Url::getLink('/basket/add', '<i class="bi bi-cart-plus"></i>', array('id' => $product['id'])); ?>
+                                </div>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>
