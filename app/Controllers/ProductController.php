@@ -27,6 +27,7 @@ class ProductController extends Controller
         $maxPrice = $model->getMaxValue('price');
         $this->set('maxPrice', $maxPrice);
 
+
         $products = $model
             ->initCollection()
             ->filterProduct($model->getDiapasoneValue())
@@ -34,6 +35,10 @@ class ProductController extends Controller
             ->getCollection()
             ->select();
         $this->set('products', $products);
+
+        $this->getFormDiapasone($model->getDiapasoneValue(), $maxPrice);
+
+
 
         $this->renderLayout();
         $model->initStatus();
@@ -188,6 +193,31 @@ class ProductController extends Controller
         }
 
         return array($sort, $order);
+    }
+
+    public function getFormDiapasone($diapasone, $maxPrice)
+    {
+        $min = 0;
+        $max = $maxPrice;
+        $minRange = 0;
+        $maxRange = 100;
+
+        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+            $min = $diapasone['min'];
+            $max = $diapasone['max'];
+        } else if (isset($_COOKIE['min']) && isset($_COOKIE['min'])) {
+            $min = $_COOKIE['min'];
+            $max = $_COOKIE['max'];
+        }
+
+
+        $minRange  = (($maxRange * $min) / $maxPrice);
+        $maxRange = (($maxRange * $max) / $maxPrice);
+
+        $this->set('min', $min);
+        $this->set('max', $max);
+        $this->set('minRange', $minRange);
+        $this->set('maxRange', $maxRange);
     }
 
     /**

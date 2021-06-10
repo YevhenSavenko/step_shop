@@ -9,7 +9,7 @@ const max_input = document.querySelector(".max_input");
 let maxPrice = 0;
 
 if(max_input){
-    maxPrice = max_input.value;
+    makeRequest();
 }
 
 function setLeftValue() {
@@ -95,16 +95,11 @@ function setMaxValue(){
 
         let percent = (100 * value) / maxPrice;
 
-        console.log(percent);
         percent > 100 ? percent = 100 : '';
-        console.log(percent);
 
         inputRight.value = parseInt(100 - percent);
         thumbRight.style.right = parseInt(100 - percent) + "%";
         range.style.right = parseInt(100 - percent) + "%";
-
-        // console.log(inputRight.value);
-        // console.log(value);
     }
 }
 
@@ -166,5 +161,44 @@ if(max_input){
         } 
     });
     max_input.addEventListener("blur", setMaxValue);
+}
+
+function makeRequest() {
+    let httpRequest = false;
+
+    if (window.XMLHttpRequest) {
+        httpRequest = new XMLHttpRequest();
+        if (httpRequest.overrideMimeType) {
+            httpRequest.overrideMimeType("text/xml");
+        }
+    } else if (window.ActiveXObject) {
+        try {
+            httpRequest = new ActiveXObject("Msxml2.XMLHTTP");
+        } catch (e) {
+            try {
+                httpRequest = new ActiveXObject("Microsoft.XMLHTTP");
+            } catch (e) {}
+        }
+    }
+
+    if (!httpRequest) {
+        alert("Не вышло :( Невозможно создать экземпляр класса XMLHTTP ");
+        return false;
+    }
+    httpRequest.onreadystatechange = function () {
+        if (httpRequest.readyState === 4) {
+            if (httpRequest.status === 200) {
+                let price = JSON.parse(httpRequest.response);
+                maxPrice = price;
+                setRightValue();
+                setLeftValue();
+            } else {
+                alert("С запросом возникла проблема.");
+            }
+        }
+    };
+
+    httpRequest.open('GET', '/api/price?get=price', true);
+    httpRequest.send(null);
 }
 
