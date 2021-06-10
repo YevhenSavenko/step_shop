@@ -12,6 +12,7 @@ class  BasketController extends Controller
 {
     public function indexAction()
     {
+        $this->forward('basket/list');
     }
 
     public function addAction()
@@ -23,14 +24,11 @@ class  BasketController extends Controller
         } else {
             array_push($_SESSION['products']['basket']['id'], $basketModel->getId());
         }
-        // $customers = $this->getModel('Customer')
-        //     ->initCollection()
-        //     ->getCollection()
-        //     ->select();
+    }
 
-        // $this->set('customers', $customers);
-
-        // $this->renderLayout();
+    public function listAction()
+    {
+        // $this->forward('basket/list');
     }
 
     public function clearAction()
