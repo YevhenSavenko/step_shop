@@ -33,4 +33,10 @@ class  ApiController extends Controller
 
         $this->forward('error/error404');
     }
+
+    public function updateAction()
+    {
+        var_dump($_POST);
+        $this->forward('error/error404');
+    }
 }

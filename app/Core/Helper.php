@@ -43,7 +43,7 @@ class Helper
     public static function inBasket($id)
     {
         if (isset($_SESSION['products']['basket']['id'])) {
-            if (in_array($id, $_SESSION['products']['basket']['id'])) {
+            if (array_key_exists($id, $_SESSION['products']['basket']['id'])) {
                 return 1;
             }
         }

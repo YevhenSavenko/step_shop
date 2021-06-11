@@ -431,3 +431,272 @@ input[type="range"]::-webkit-slider-thumb {
   background: #212529f3 !important;
   color: #ffffffb9 !important;
 }
+
+/********* Basket *********/
+.cart__wrapper {
+  margin: 50px 0;
+  padding: 50px 100px;
+  border: 1px solid #273c32;
+}
+
+.cart__title {
+  margin-bottom: 35px;
+  text-transform: uppercase;
+  font-size: 32px;
+  letter-spacing: 2px;
+  font-weight: 700;
+}
+
+.cart__empty h2 {
+  text-align: center;
+  font-size: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  margin: 0 0 50px;
+}
+
+.cart__link-home {
+  text-align: right;
+}
+
+.cart__link-home a {
+  position: relative;
+  color: #212529;
+  text-transform: uppercase;
+  font-size: 15px;
+  font-weight: bolder;
+  text-decoration: none;
+}
+
+.cart__link-home a::after {
+  display: block;
+  position: absolute;
+  content: "";
+  left: 0;
+  bottom: -5px;
+  width: 20%;
+  height: 2px;
+  background: #212529;
+  transition: all 0.5s;
+}
+
+.cart__link-home a:hover::after {
+  width: 100%;
+}
+
+.cart__link-home a:hover {
+  color: #212529;
+}
+
+.cart__item,
+.cart__titles-table,
+.cart__item-wrapper {
+  display: flex;
+}
+
+.cart__item {
+  border-top: 2px solid #21252979;
+  padding: 40px 0;
+}
+
+.cart__item-image img {
+  max-width: 100px;
+  min-height: 150px;
+  object-fit: cover;
+}
+
+.cart__quantity-wrapper {
+  padding: 10px 15px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #000;
+}
+
+.cart__info-quantity input {
+  cursor: not-allowed;
+  border: none;
+  outline: none;
+  max-width: 40px;
+  text-align: center;
+  font-size: 18px;
+}
+
+.cart__minus {
+  font-size: 14px;
+  margin-bottom: 3px;
+}
+
+.cart__plus {
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.cart__minus,
+.cart__plus {
+  cursor: pointer;
+  padding: 0 10px;
+  font-weight: 700;
+  user-select: none;
+}
+
+.cart__item-wrapper {
+  min-width: 300px;
+  max-width: 300px;
+  margin-right: 25px;
+}
+
+.cart__inputs {
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  min-width: 142px;
+  margin-right: 25px;
+}
+
+.cart__price,
+.cart__total {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  min-width: 100px !important;
+  max-width: 100px !important;
+}
+
+.cart__price {
+  min-width: 80px;
+  margin-right: 25px;
+}
+
+.cart__total {
+  min-width: 100px;
+  margin-right: 25px;
+}
+
+.cart__group {
+  display: flex;
+}
+
+.cart__titles-table {
+  font-weight: 700;
+  font-size: 16px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 25px;
+}
+
+.cart__info-product {
+  margin-left: 20px;
+}
+
+.cart__info-title {
+  font-weight: 700;
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.cart__info-author {
+  font-style: italic;
+}
+
+.cart__delete {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cart__delete a i {
+  font-size: 20px;
+  color: #c51903;
+  font-weight: bolder;
+}
+
+.cart__align {
+  justify-content: center;
+}
+
+.cart__buttons {
+  display: flex;
+}
+
+.cart__reset-link:hover {
+  text-decoration: none;
+  color: #fff;
+  background: #7ca893;
+}
+
+.cart__total-block {
+  margin-left: 100px;
+}
+
+.cart__total-info div {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.cart__row {
+  display: flex;
+  justify-content: right;
+}
+
+.cart__flags {
+  display: block;
+  font-weight: 800;
+  text-transform: uppercase;
+  min-width: 100px;
+  margin-right: 25px;
+}
+
+.cart__output {
+  display: block;
+  min-width: 100px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.cart__pay {
+  margin-top: 20px;
+}
+
+.cart__route {
+  margin-top: 50px;
+}
+
+.cart__buttons {
+  margin-top: 50px;
+}
+
+.cart__reset a {
+  display: block;
+  color: rgba(255, 255, 255, 0.55);
+  background: #212529;
+  width: 100%;
+  height: 100%;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 1px;
+  padding: 10px 35px;
+  transition: all 0.2s;
+}
+
+.cart__reset a:hover,
+.cart__index a:hover,
+.cart__pay a:hover {
+  color: #e2e2e2;
+  background: #212529a6;
+}
+
+.cart__index a,
+.cart__pay a {
+  display: block;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.55);
+  background: #212529;
+  font-weight: 600;
+  text-decoration: none;
+  letter-spacing: 1px;
+  padding: 10px 35px;
+  transition: all 0.2s;
+}
+/*******************/

@@ -91,8 +91,9 @@ class Model implements DbModelInterface
 
         if ($params) {
             $sqlСondition = ' where ';
+            $lastKey = array_key_last($params);
+
             foreach ($params as $key => $vlaue) {
-                $lastKey = array_key_last($params);
                 $sqlСondition .= " {$key} = ?";
 
                 if ($key !== $lastKey) {

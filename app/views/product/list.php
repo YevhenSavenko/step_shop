@@ -1,4 +1,5 @@
 <?php
+
 use Core\Helper;
 use Core\View; ?>
 <?php require_once View::getViewDir() . \DS . 'static' . \DS . 'status.php'; ?>
@@ -89,7 +90,7 @@ use Core\View; ?>
                         <div class="wrapper-links row">
                             <?php if (Helper::inBasket($product['id']) === 1) : ?>
                                 <div class="in-basket">
-                                    <?= \Core\Url::getLink('/######', '<i class="bi bi-cart-check"></i>'); ?>
+                                    <?= \Core\Url::getLink('/basket/index', '<i class="bi bi-cart-check"></i>'); ?>
                                 </div>
                             <?php else : ?>
                                 <div class="no-basket">
