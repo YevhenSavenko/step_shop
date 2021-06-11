@@ -5,16 +5,16 @@
             <h1 class="cart__title">Корзина </h1>
             <div class="cart__titles-table">
                 <div class="cart__item-wrapper">
-                    Book
+                    Товари
                 </div>
                 <div class="cart__inputs cart__align">
-                    Quantity
+                    Кількість
                 </div>
                 <div class="cart__price">
-                    Price
+                    Ціна
                 </div>
                 <div class="cart__total">
-                    Total
+                    Сума
                 </div>
             </div>
 
@@ -24,14 +24,14 @@
 
                         <div class="cart__item">
                             <div class="cart__item-wrapper">
-                                <div class="cart__empty-image">
-                                    <!-- <img src="<?= $product[$id]['imageLink'] ?>" alt=""> -->
+                                <div class="cart__empty-img">
+                                    empty image
                                 </div>
                                 <div class="cart__info-product">
-                                    <div class="cart__info-title">
+                                    <div class="cart__info-sku">
                                         <?= $product['sku'] ?>
                                     </div>
-                                    <div class="cart__info-author">
+                                    <div class="cart__info-title">
                                         <?= $product['name'] ?>
                                     </div>
                                 </div>
@@ -69,13 +69,13 @@
             </form>
         </div>
         <div class="cart__total-block">
-            <h1 class="cart__title">Total: </h1>
+            <h1 class="cart__title">Інформація: </h1>
             <div class="cart__total-info">
                 <div class="cart__row">
-                    <span class="cart__flags">Quantity:</span> <span class="cart__output"><?= $this->get('quantityProducts') ?></span>
+                    <span class="cart__flags">Кількість:</span> <span class="cart__output"><?= $this->get('quantityProducts') ?></span>
                 </div>
                 <div class="cart__row">
-                    <span class="cart__flags">Subtotal:</span> <span class="cart__output"><?= $this->get('totalPrice') ?> $</span>
+                    <span class="cart__flags">Сума корзини:</span> <span class="cart__output"><?= $this->get('totalPrice') ?> $</span>
                 </div>
             </div>
             <div class="cart__route">

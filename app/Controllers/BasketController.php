@@ -35,7 +35,7 @@ class  BasketController extends Controller
         $this->set('title', "Корзина");
         $basketModel = $this->getModel('Basket');
 
-        if (isset($_SESSION['products']['basket']['id'])) {
+        if (isset($_SESSION['products']['basket']['id']) && !empty($_SESSION['products']['basket']['id'])) {
             $ids = array_keys($_SESSION['products']['basket']['id']);
 
             $this->set('infoProduct', $_SESSION['products']['basket']['id']);
@@ -71,7 +71,6 @@ class  BasketController extends Controller
             $this->set('totalPrice', $totalPrice);
             $this->set('quantityProducts', array_sum($_SESSION['products']['basket']['id']));
         }
-
         $this->set('products', $products);
         $this->renderLayout();
     }
