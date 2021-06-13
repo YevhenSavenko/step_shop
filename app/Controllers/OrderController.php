@@ -1,0 +1,61 @@
+<?php
+
+namespace Controllers;
+
+use Core\Controller;
+use Core\DB;
+use Core\Helper;
+
+
+/**
+ * Class OrderController
+ */
+class OrderController extends Controller
+{
+    public function indexAction()
+    {
+        $user = [];
+
+        if (empty($_SESSION['products']['basket']['id'])) {
+            Helper::redirect('/error/error404');
+            return;
+        }
+
+        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST' && filter_input(INPUT_POST, 'order')) {
+            $model = $this->getModel('Order');
+            $validValues = $model->validValuesOrder($model->getPostValues());
+
+            if ($validValues !== 0) {
+                $result = $model->dataPreparation($validValues);
+                $lastId = $model->addItem($result, $model->getColumns())
+                    ->getLastId();
+
+                $model->addOrderProducts($lastId);
+                $_SESSION['products']['basket']['order'] = 'active';
+                Helper::redirect("/order/generate?id={$lastId}");
+            } else {
+                $user = $model->getPostValues();
+            }
+        } else if (Helper::getCustomer()) {
+            $user = Helper::getCustomer();
+        }
+
+        $this->set('user', $user);
+        $this->set('title', 'Замовлення');
+        $this->renderLayout();
+        $this->getModel('Order')->initStatus();
+    }
+
+    public function generateAction()
+    {
+        if (isset($_SESSION['products']['basket']['order']) && $_SESSION['products']['basket']['order'] = 'active') {
+            $this->set('total', $_SESSION['products']['basket']['total']);
+            $this->set('orderId', $this->getModel('Order')->getId());
+            $_SESSION['products']['basket'] = [];
+
+            $this->renderLayout();
+        } else {
+            Helper::redirect('/error/error404');
+        }
+    }
+}

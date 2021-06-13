@@ -68,4 +68,15 @@ class DB
 
         $statement->execute([$model->getId()]);
     }
+
+    public function getLastId()
+    {
+        $dbh = $this->getConnection();
+        $sql = "select last_insert_id() as last";
+
+        $statement = $dbh->prepare($sql);
+        $statement->execute();
+
+        return $statement->fetch()['last'];
+    }
 }

@@ -36,9 +36,8 @@ class  BasketController extends Controller
         $basketModel = $this->getModel('Basket');
 
         if (isset($_SESSION['products']['basket']['id']) && !empty($_SESSION['products']['basket']['id'])) {
-            $ids = array_keys($_SESSION['products']['basket']['id']);
-
             $this->set('infoProduct', $_SESSION['products']['basket']['id']);
+            $ids = array_keys($_SESSION['products']['basket']['id']);
 
             $products = $basketModel
                 ->initCollection()
@@ -68,6 +67,7 @@ class  BasketController extends Controller
                 }
             }
 
+            $_SESSION['products']['basket']['total'] = $totalPrice;
             $this->set('totalPrice', $totalPrice);
             $this->set('quantityProducts', array_sum($_SESSION['products']['basket']['id']));
         }
@@ -98,3 +98,5 @@ class  BasketController extends Controller
         return filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
     }
 }
+
+// SELECT * FROM `basket_product` JOIN `products` on `basket_product`.`product_id` = `products`.`id` WHERE `basket_product`.`order_id` = 1;

@@ -6,7 +6,7 @@ use Core\DB;
 use Core\Model;
 
 /**
- * Class Menu
+ * Class Basket
  */
 class Basket extends Model
 {

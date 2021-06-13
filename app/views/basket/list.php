@@ -18,7 +18,7 @@
                 </div>
             </div>
 
-            <form action="index.php?action=recalculate" method="POST">
+            <form action="<?= $this->getBP() ?>/order/index" method="POST">
                 <div class="cart__items">
                     <?php foreach ($products as $product) : ?>
 
@@ -37,13 +37,13 @@
                                 </div>
                             </div>
                             <div class="cart__inputs">
-                                <div>
-                                    <input type="hidden" name="p[id][]" value="<?= $product['id'] ?>">
-                                </div>
+                                <!-- <div>
+                                    <input type="hidden" name="p[id][<?= $product['id'] ?>]" value="<?= $this->get('infoProduct')[$product['id']] ?>">
+                                </div> -->
                                 <div class="cart__info-quantity">
                                     <div class="cart__quantity-wrapper">
                                         <div class="cart__minus"> &mdash; </div>
-                                        <input type="number" name="p[qty][]" value="<?= $this->get('infoProduct')[$product['id']] ?>" size="5" readonly>
+                                        <input type="number" value="<?= $this->get('infoProduct')[$product['id']] ?>" size="5" readonly>
                                         <div class="cart__plus"> + </div>
                                     </div>
                                 </div>
@@ -59,17 +59,18 @@
                             </div>
                         </div>
                     <?php endforeach ?>
+                    <!-- <input name="total" type="hidden" value="<?= $this->get('totalPrice') ?>"> -->
 
                     <div class="cart__buttons">
-                        <div class="cart__reset">
-                            <?= \Core\Url::getLink('/basket/clear', 'Очистити корзину') ?>
+                        <div class="cart__pay">
+                            <input name="request" type="submit" value="Оформити замовлення">
                         </div>
                     </div>
                 </div>
             </form>
         </div>
         <div class="cart__total-block">
-            <h1 class="cart__title">Інформація: </h1>
+            <h1 class="cart__title">Разом: </h1>
             <div class="cart__total-info">
                 <div class="cart__row">
                     <span class="cart__flags">Кількість:</span> <span class="cart__output"><?= $this->get('quantityProducts') ?></span>
@@ -82,8 +83,8 @@
                 <div class="cart__index">
                     <?= \Core\Url::getLink('/product/list', 'Продовжити покупки') ?>
                 </div>
-                <div class="cart__pay">
-                    <?= \Core\Url::getLink('#########', 'Оформити замовлення') ?>
+                <div class="cart__reset">
+                    <?= \Core\Url::getLink('/basket/clear', 'Очистити корзину') ?>
                 </div>
             </div>
         </div>

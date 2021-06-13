@@ -264,6 +264,12 @@ class Model implements DbModelInterface
         return $this;
     }
 
+    public function getLastId()
+    {
+        $db = new DB();
+        return $db->getLastId();
+    }
+
     public function getTableName(): string
     {
         return $this->table_name;
