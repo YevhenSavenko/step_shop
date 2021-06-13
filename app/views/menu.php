@@ -14,6 +14,17 @@ use Core\Helper;
         <?php endforeach; ?>
       </ul>
 
+      <ul class="me-5 navbar-nav  navbar-right">
+        <li class="nav-item me-3 menu-basket">
+          <a class="nav-link" href="<?php echo $this->getBP(); ?>/basket/list/">
+            <i class="bi bi-cart pe-2 image-basket">
+              <span> <?= isset($_SESSION['products']['basket']['id']) ? array_sum($_SESSION['products']['basket']['id']) : 0 ?></span>
+            </i>
+            Кошик: <?= isset($_SESSION['products']['basket']['total']) ? $_SESSION['products']['basket']['total'] : 0 ?> ₴
+          </a>
+        </li>
+      </ul>
+
       <?php $user = Helper::getCustomer() ?>
       <!-- <?php var_dump($user) ?> -->
       <?php if ($user) : ?>
@@ -27,7 +38,6 @@ use Core\Helper;
           <li class="nav-item"><a class="nav-link" href="<?php echo $this->getBP(); ?>/customer/login/"><i class="bi bi-door-closed-fill pe-2"></i>Ввійти</a></li>
         </ul>
       <?php endif ?>
-
     </div>
   </div>
 </nav>

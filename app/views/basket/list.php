@@ -52,7 +52,7 @@
                                 <span><?= $product['price'] ?> ₴</span>
                             </div>
                             <div class="cart__total">
-                                <span><?= $this->get('infoProduct')[$product['id']] * $product['price'] ?> $</span>
+                                <span><?= $this->get('infoProduct')[$product['id']] * $product['price'] ?> ₴</span>
                             </div>
                             <div class="cart__delete">
                                 <?= \Core\Url::getLink('/basket/delete', '<i class="bi bi-cart-x"></i>', array('id' => $product['id'])) ?>
@@ -76,7 +76,7 @@
                     <span class="cart__flags">Кількість:</span> <span class="cart__output"><?= $this->get('quantityProducts') ?></span>
                 </div>
                 <div class="cart__row">
-                    <span class="cart__flags">Сума корзини:</span> <span class="cart__output"><?= $this->get('totalPrice') ?> $</span>
+                    <span class="cart__flags">Сума корзини:</span> <span class="cart__output"><?= $this->get('totalPrice') ?> ₴</span>
                 </div>
             </div>
             <div class="cart__route">
