@@ -46,6 +46,22 @@ class OrderController extends Controller
         $this->getModel('Order')->initStatus();
     }
 
+    public function listAction()
+    {
+        $this->set('title', 'Всі замовлення');
+
+        if ($user = Helper::getCustomer()) {
+            $orders = $this->getModel('Order')->getAllOrders($user['customer_id']);
+
+            $this->set('orders', $orders);
+        } else {
+            Helper::redirect('/error/error404');
+            return;
+        }
+
+        $this->renderLayout();
+    }
+
     public function generateAction()
     {
         if (isset($_SESSION['products']['basket']['order']) && $_SESSION['products']['basket']['order'] = 'active') {

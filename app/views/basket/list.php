@@ -1,3 +1,8 @@
+<?php
+
+use Core\View; ?>
+<?php require_once View::getViewDir() . \DS . 'static' . \DS . 'links.php'; ?>
+
 <?php $products = $this->get('products') ?>
 <?php if (!empty($products)) : ?>
     <div class="cart__group mt-5">
@@ -37,9 +42,6 @@
                                 </div>
                             </div>
                             <div class="cart__inputs">
-                                <!-- <div>
-                                    <input type="hidden" name="p[id][<?= $product['id'] ?>]" value="<?= $this->get('infoProduct')[$product['id']] ?>">
-                                </div> -->
                                 <div class="cart__info-quantity">
                                     <div class="cart__quantity-wrapper">
                                         <div class="cart__minus"> &mdash; </div>
@@ -59,8 +61,6 @@
                             </div>
                         </div>
                     <?php endforeach ?>
-                    <!-- <input name="total" type="hidden" value="<?= $this->get('totalPrice') ?>"> -->
-
                     <div class="cart__buttons">
                         <div class="cart__pay">
                             <input name="request" type="submit" value="Оформити замовлення">

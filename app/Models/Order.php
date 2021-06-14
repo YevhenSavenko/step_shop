@@ -70,7 +70,7 @@ class Order extends Model
 
     public function addOrderProducts($lastId)
     {
-        $sql = "insert into order_products (id, order_id, product_id, qty) values ";
+        $sql = "insert into order_products (id, order_id, product_id, qty_order) values ";
         $params = [];
         $count = 1;
         $lastKey = array_key_last($_SESSION['products']['basket']['id']);
@@ -91,5 +91,41 @@ class Order extends Model
 
         $db = new DB();
         $db->query($sql, $params);
+    }
+
+    public function getOrdersIds($id = null)
+    {
+        $sql = "select id from orders";
+        $params = [];
+
+        if ($id) {
+            $sql .= ' where customer_id = ?;';
+            $params[] = $id;
+        }
+
+        $sql .= ';';
+
+        $db = new DB();
+        return $db->query($sql, $params);
+    }
+
+    public function getAllOrders($userId)
+    {
+        $idsOrders = $this->getOrdersIds($userId);
+        $db = new DB();
+        $orders = [];
+
+        foreach ($idsOrders as $key => $id) {
+            $params = [];
+
+            $sqlProducts = "SELECT * FROM `order_products` JOIN `products` on `order_products`.`product_id` = `products`.`id` WHERE `order_products`.`order_id` = ?;";
+            $sqlOrders = "select * from orders where id = ?;";
+
+            $params[] = $id['id'];
+
+            $orders[] = ['info' => array_merge($db->query($sqlOrders,  $params)[0], ['products' => $db->query($sqlProducts,  $params)])];
+        }
+
+        return array_reverse($orders);
     }
 }
