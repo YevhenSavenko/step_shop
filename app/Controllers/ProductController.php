@@ -66,68 +66,80 @@ class ProductController extends Controller
      */
     public function editAction()
     {
-        $model = $this->getModel('Product');
-        $columns = $model->getColumns();
-        $this->set('saved', 0);
-        $this->set("title", "Редагування товару");
-        $this->set('id', '');
-        $id = $this->getId();
-        if ($id) {
-            if ($model->getItem($id)) {
-                $this->set('headding', 'Редагування товару');
-                $this->set('btn', 'Редагувати');
-                $this->set('product', $model->getItem($id));
-                $this->set('saved', 1);
-            } else {
-                $this->set('id', $id);
+        if (Helper::isAdmin()) {
+            $model = $this->getModel('Product');
+            $columns = $model->getColumns();
+            $this->set('saved', 0);
+            $this->set("title", "Редагування товару");
+            $this->set('id', '');
+            $id = $this->getId();
+            if ($id) {
+                if ($model->getItem($id)) {
+                    $this->set('headding', 'Редагування товару');
+                    $this->set('btn', 'Редагувати');
+                    $this->set('product', $model->getItem($id));
+                    $this->set('saved', 1);
+                } else {
+                    $this->set('id', $id);
+                }
             }
+
+            $edit = filter_input(INPUT_POST, 'edited');
+            if ($edit) {
+                $values = $model->validValues($model->getPostValues());
+                $model->updateItem($values, $columns, $id)->initStatus(1, 'Редагування відбулось успішно');
+
+                Helper::redirect('/product/list');
+                return;
+            }
+
+            $this->renderLayout();
+            $model->initStatus();
+        } else {
+            Helper::redirect("/error/error404");
         }
-
-        $edit = filter_input(INPUT_POST, 'edited');
-        if ($edit) {
-            $values = $model->validValues($model->getPostValues());
-            $model->updateItem($values, $columns, $id)->initStatus(1, 'Редагування відбулось успішно');
-
-            Helper::redirect('/product/list');
-            return;
-        }
-
-        $this->renderLayout();
-        $model->initStatus();
     }
 
     public function addAction()
     {
-        $model = $this->getModel('Product');
-        $columns = $model->getColumns();
-        $this->set("title", "Додавання товару");
-        $this->set('headding', 'Додавання товару');
-        $this->set('btn', 'Додати');
-        if ($values = $model->getPostValues()) {
-            $values = $model->validValues($values);
-            $id = $model->addItem($values, $columns)->getMaxValue('id');
-            $model->initStatus(1, 'Успішне додавання товару');
-            // Helper::redirect('/product/list?status=ok_add');
-            Helper::redirect("/product/edit?id={$id}");
-        }
+        if (Helper::isAdmin()) {
+            $model = $this->getModel('Product');
+            $columns = $model->getColumns();
+            $this->set("title", "Додавання товару");
+            $this->set('headding', 'Додавання товару');
+            $this->set('btn', 'Додати');
+            if ($values = $model->getPostValues()) {
+                $values = $model->validValues($values);
+                $id = $model->addItem($values, $columns)->getMaxValue('id');
+                $model->initStatus(1, 'Успішне додавання товару');
+                // Helper::redirect('/product/list?status=ok_add');
+                Helper::redirect("/product/edit?id={$id}");
+            }
 
-        $this->renderLayout();
+            $this->renderLayout();
+        } else {
+            Helper::redirect("/error/error404");
+        }
     }
 
     public function deleteAction()
     {
-        $model = $this->getModel('Product');
-        $id = $this->getId();
+        if (Helper::isAdmin()) {
+            $model = $this->getModel('Product');
+            $id = $this->getId();
 
-        if ($id && $model->getItem($id)) {
-            $model->deleteItem()->initStatus(1, 'Товар успішно видалено');;
-            // $fieldId = $model->getColumns();
-            // $model->deleteItem($fieldId[0], $id);
+            if ($id && $model->getItem($id)) {
+                $model->deleteItem()->initStatus(1, 'Товар успішно видалено');;
+                // $fieldId = $model->getColumns();
+                // $model->deleteItem($fieldId[0], $id);
+            } else {
+                $model->initStatus(2, 'Такого товару не існує');
+            }
+
+            Helper::redirect('/product/list');
         } else {
-            $model->initStatus(2, 'Такого товару не існує');
+            Helper::redirect("/error/error404");
         }
-
-        Helper::redirect('/product/list');
     }
 
     /**

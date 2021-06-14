@@ -1,7 +1,7 @@
 <?php
-
 use Core\Helper;
-use Core\View; ?>
+use Core\View; 
+?>
 <?php require_once View::getViewDir() . \DS . 'static' . \DS . 'status.php'; ?>
 
 <form class="my-4" method="POST" action="<?= $_SERVER['REQUEST_URI'] ?>">
@@ -49,13 +49,15 @@ use Core\View; ?>
     </div>
 </div>
 
-<div class="product">
-    <p class="text-center my-3 row justify-content-center">
-        <span class="btn-add col-md-3">
-            <?= \Core\Url::getLink('/product/add', 'Додати товар +'); ?>
-        </span>
-    </p>
-</div>
+<?php if (Helper::isAdmin()) : ?>
+    <div class="product">
+        <p class="text-center my-3 row justify-content-center">
+            <span class="btn-add col-md-3">
+                <?= \Core\Url::getLink('/product/add', 'Додати товар +'); ?>
+            </span>
+        </p>
+    </div>
+<?php endif ?>
 
 <?php $products =  $this->get('products') ?>
 <?php if ($products) : ?>

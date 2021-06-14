@@ -275,7 +275,7 @@
 
 .btn-add {
   display: block;
-  background: #000;
+  background: #212529;
   padding: 0px !important;
 }
 
@@ -955,7 +955,7 @@ input[type="range"]::-webkit-slider-thumb {
 
 .basket__nav {
   display: flex;
-  justify-content: center;
+  flex-direction: row-reverse;
 }
 
 .wrapper__links-basket {

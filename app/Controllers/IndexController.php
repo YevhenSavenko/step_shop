@@ -1,4 +1,5 @@
 <?php
+
 namespace Controllers;
 
 use Core\Controller;
@@ -25,5 +26,4 @@ class IndexController extends Controller
     {
         echo "hello from testAction";
     }
-
 }

@@ -42,19 +42,22 @@ if ($product) : ?>
             <div class="wrapper-view-links">
                 <?php if (Helper::inBasket($product['id'])) : ?>
                     <div class="in-view-basket">
-                        <?= \Core\Url::getLink('/#####', '<span>В корзині</span><i class="bi bi-check2"></i>'); ?>
+                        <?= \Core\Url::getLink('/basket/list', '<span>В корзині</span><i class="bi bi-check2"></i>'); ?>
                     </div>
                 <?php else : ?>
                     <div class="no-view-basket">
                         <?= \Core\Url::getLink('/basket/add', 'В корзину', array('id' => $product['id'])); ?>
                     </div>
                 <?php endif ?>
-                <div class="edit-link">
-                    <?= \Core\Url::getLink('/product/edit', 'Редагувати', array('id' => $product['id'])); ?>
-                </div>
-                <div class="delete-link">
-                    <?= \Core\Url::getLink('/product/delete', 'Видалити', array('id' => $product['id'])); ?>
-                </div>
+
+                <?php if (Helper::isAdmin()) : ?>
+                    <div class="edit-link">
+                        <?= \Core\Url::getLink('/product/edit', 'Редагувати', array('id' => $product['id'])); ?>
+                    </div>
+                    <div class="delete-link">
+                        <?= \Core\Url::getLink('/product/delete', 'Видалити', array('id' => $product['id'])); ?>
+                    </div>
+                <?php endif ?>
             </div>
 
         </div>

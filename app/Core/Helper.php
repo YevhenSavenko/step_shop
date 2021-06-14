@@ -50,4 +50,15 @@ class Helper
 
         return 0;
     }
+
+    public static function isAdmin()
+    {
+        if (self::getCustomer()) {
+            if (self::getCustomer()['admin_role'] === 1) {
+                return 1;
+            }
+        }
+
+        return 0;
+    }
 }
