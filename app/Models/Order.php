@@ -99,17 +99,17 @@ class Order extends Model
         $params = [];
 
         if ($id) {
-            $sql .= ' where customer_id = ?;';
+            $sql .= ' where customer_id = ? ';
             $params[] = $id;
         }
 
-        $sql .= ';';
+        $sql .= ' order by id desc;';
 
         $db = new DB();
         return $db->query($sql, $params);
     }
 
-    public function getAllOrders($userId)
+    public function getAllOrders($userId = null)
     {
         $idsOrders = $this->getOrdersIds($userId);
         $db = new DB();
@@ -121,11 +121,12 @@ class Order extends Model
             $sqlProducts = "SELECT * FROM `order_products` JOIN `products` on `order_products`.`product_id` = `products`.`id` WHERE `order_products`.`order_id` = ?;";
             $sqlOrders = "select * from orders where id = ?;";
 
+
             $params[] = $id['id'];
 
             $orders[] = ['info' => array_merge($db->query($sqlOrders,  $params)[0], ['products' => $db->query($sqlProducts,  $params)])];
         }
 
-        return array_reverse($orders);
+        return $orders;
     }
 }

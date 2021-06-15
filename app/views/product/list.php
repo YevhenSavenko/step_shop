@@ -51,9 +51,12 @@ use Core\View;
 
 <?php if (Helper::isAdmin()) : ?>
     <div class="product">
-        <p class="text-center my-3 row justify-content-center">
-            <span class="btn-add col-md-3">
+        <p class="text-center my-3 row justify-content-around">
+            <span class="btn-add col-md-3 me-5">
                 <?= \Core\Url::getLink('/product/add', 'Додати товар +'); ?>
+            </span>
+            <span class="btn-add col-md-3">
+                <?= \Core\Url::getLink('/order/all', 'Переглянути замовлення'); ?>
             </span>
         </p>
     </div>

@@ -1005,3 +1005,31 @@ input[type="range"]::-webkit-slider-thumb {
   letter-spacing: 1px;
   font-weight: bolder;
 }
+
+.person__info {
+  margin: 25px 0;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.info__about {
+  display: flex;
+  margin-bottom: 10px;
+  line-height: 1.5;
+  letter-spacing: 1px;
+  font-weight: 500;
+  font-size: 16px;
+}
+
+.left__info {
+  min-width: 250px;
+  max-width: 250px;
+  font-weight: 700;
+}
+
+.right__info {
+  min-width: 250px;
+  max-width: 250px;
+}

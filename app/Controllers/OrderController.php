@@ -74,4 +74,17 @@ class OrderController extends Controller
             Helper::redirect('/error/error404');
         }
     }
+
+    public function allAction()
+    {
+        if (Helper::isAdmin()) {
+            $this->set('title', 'Всі замовлення');
+            $orders = $this->getModel('Order')->getAllOrders();
+
+            $this->set('orders', $orders);
+            $this->renderLayout();
+        } else {
+            Helper::redirect('/error/error404');
+        }
+    }
 }
