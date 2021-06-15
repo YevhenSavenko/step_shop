@@ -22,6 +22,15 @@ class ProductController extends Controller
      */
     public function listAction()
     {
+        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+            if (filter_input(INPUT_POST, 'flag') === 'price') {
+                $maxPrice = $this->getModel('Product')->getMaxValue('price');
+
+                echo json_encode($maxPrice);
+                exit;
+            }
+        }
+
         $this->set('title', "Товари");
         $model = $this->getModel('Product');
         $maxPrice = $model->getMaxValue('price');
@@ -129,7 +138,12 @@ class ProductController extends Controller
             $id = $this->getId();
 
             if ($id && $model->getItem($id)) {
-                $model->deleteItem()->initStatus(1, 'Товар успішно видалено');;
+                if (array_key_exists($id, $_SESSION['products']['basket']['id'])) {
+                    unset($_SESSION['products']['basket']['id'][$id]);
+                    $_SESSION['products']['basket']['total'] = $_SESSION['products']['basket']['total'] - $model->getItem($id)['price'];
+                }
+
+                $model->deleteItem()->initStatus(1, 'Товар успішно видалено');
                 // $fieldId = $model->getColumns();
                 // $model->deleteItem($fieldId[0], $id);
             } else {
