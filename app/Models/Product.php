@@ -114,7 +114,7 @@ class Product extends Model
         foreach ($data as $key => $value) {
 
             if ($text === '' && $value === 'empty') {
-                $text = "В продукті в якого id = {$data['id']} поле '{$key}'";
+                $text = "В продукті з ідентифікатором <b>{$data['id']}</b> поле '{$key}'";
                 $status = 'no';
             } else if ($text !== '' && $value === 'empty') {
                 $text .= ", '{$key}'";
@@ -122,7 +122,7 @@ class Product extends Model
         }
 
         if ($text !== '') {
-            $text .= ' неіснує або пусте. ';
+            $text .= ' не існує або пусте. <br>';
         }
 
         return ['text' => $text, 'status' => $status];
@@ -153,37 +153,22 @@ class Product extends Model
 
                         if ($this->getItem($product->{$this->id_column})) {
                             $id = (string)$product->{$this->id_column};
-                            unset($data['id']);
 
-                            //updateItem
+                            $this->updateItem($validData, $columns, $id);
                         } else {
-                            //addItem
+                            $this->addItem($validData, $columns);
                         }
                     } else {
                         $problemText .= $checkValid['text'];
                     }
-
-
-
-
-
-                    // var_dump($data);
-                    // echo '<br><br>';
-
-
-                    // if ($this->getItem($product->{$this->id_column})) {
-                    //     array_shift($columns);
-                    //     $id = (string)$product->{$this->id_column};
-
-                    // }
                 }
             }
         }
 
         if (!empty($problemText)) {
-            $problemText .= 'Виправте файл для даних продуктів, та відправте знову. В інших продуктах проблем не виникло і їх було додано в базу даних';
+            $problemText .= 'Виправте файл для перелічених продуктів, та відправте знову. В інших продуктах проблем не виникло і їх було додано в базу даних';
         }
 
-        var_dump($problemText);
+        return $problemText;
     }
 }

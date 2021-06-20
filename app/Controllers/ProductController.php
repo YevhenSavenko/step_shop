@@ -195,6 +195,7 @@ class ProductController extends Controller
     {
         if (Helper::isAdmin()) {
             $this->set("title", "Завантаження файлів");
+            $this->set("danger", '');
             $model = $this->getModel('Product');
 
             $checkFile = $model->fileСheck();
@@ -203,7 +204,12 @@ class ProductController extends Controller
                 $use_errors = libxml_use_internal_errors(true);
                 $xml = simplexml_load_file($_FILES['userfile']['tmp_name']);
                 if ($xml) {
-                    $model->updateProductList($xml);
+                    $textProblem = $model->updateProductList($xml);
+                    if (!empty($textProblem)) {
+                        $this->set("danger", $textProblem);
+                    } else {
+                        $model->initStatus(1, 'Оновлення бази пройшло успішно');
+                    }
                 } else {
                     $model->initStatus(2, 'Неправильно сформовано вміст файла');
                 }

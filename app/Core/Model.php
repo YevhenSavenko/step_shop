@@ -197,9 +197,9 @@ class Model implements DbModelInterface
             }
         }
 
-        $sql = trim($sql, ',') . " where {$this->id_column} = :id";
+        $sql = trim($sql, ',') . " where {$this->id_column} = :id_where;";
 
-        $params[':id'] = $id;
+        $params[':id_where'] = $id;
 
         $db = new DB();
         $db->query($sql, $params);
