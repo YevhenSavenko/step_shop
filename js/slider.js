@@ -167,7 +167,7 @@ function makeRequest() {
     let flag = 'flag=price';
 
     let request = new XMLHttpRequest();
-    request.open('POST','/product/list',true);
+    request.open('POST', window.location.href, true);
     
     request.addEventListener('readystatechange', function() {
     

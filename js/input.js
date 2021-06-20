@@ -46,7 +46,7 @@ function updateCart(id, qty){
       qty = 'qty=' + encodeURIComponent(qty);
 
       let request = new XMLHttpRequest();
-      request.open('POST','/basket/list',true);
+      request.open('POST', window.location.href, true);
       
       request.addEventListener('readystatechange', function() {
         
