@@ -1,15 +1,12 @@
+<?php use Core\Helper; ?>
+
 <div class="mt-5">
     <h4 class="text-uppercase fw-bolder text-center fs-2">
         Опис
     </h4>
 </div>
 
-<?php
-
-use Core\Helper;
-
-if ($product) : ?>
-
+<?php if ($product) : ?>
     <div class="view">
         <div class="view__product">
             <div class="empty">

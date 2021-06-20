@@ -68,4 +68,122 @@ class Product extends Model
 
         return $this;
     }
+
+    public function fileСheck()
+    {
+        $status = 0;
+        $text = '';
+
+        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+            if ($_FILES['userfile']['error'] === 1) {
+                $status = 2;
+                $text = 'Занадто великий файл';
+            } else if ($_FILES['userfile']['error'] === 2) {
+                $status = 2;
+                $text = 'Максимальний розмір файлу 1 МБ';
+            } else if ($_FILES['userfile']['error'] === 3) {
+                $status = 2;
+                $text = 'Завантаження файлу обірвалося';
+            } else if ($_FILES['userfile']['error'] === 4) {
+                $status = 2;
+                $text = 'Файл не був завантажений';
+            } else if ($_FILES['userfile']['error'] === 6 || $_FILES['userfile']['error'] === 7  || $_FILES['userfile']['error'] === 8) {
+                $status = 2;
+                $text = 'Дана дія недоступна, спробуйте пізніше';
+            } else if ($_FILES['userfile']['type'] !== 'text/xml') {
+                $status = 2;
+                $text = 'Файл неправильного формату (Файли повинні бути формату .xml)';
+            } else {
+                $status = 1;
+            }
+        }
+
+        if ($status === 2) {
+            $this->initStatus(2, $text);
+            return 0;
+        } else if ($status === 1) {
+            return 1;
+        }
+    }
+
+    public function validDataProduct($data)
+    {
+        $text = '';
+        $status = 'ok';
+
+        foreach ($data as $key => $value) {
+
+            if ($text === '' && $value === 'empty') {
+                $text = "В продукті в якого id = {$data['id']} поле '{$key}'";
+                $status = 'no';
+            } else if ($text !== '' && $value === 'empty') {
+                $text .= ", '{$key}'";
+            }
+        }
+
+        if ($text !== '') {
+            $text .= ' неіснує або пусте. ';
+        }
+
+        return ['text' => $text, 'status' => $status];
+    }
+
+    public function updateProductList($objectList)
+    {
+        $data = [];
+        $problemText = '';
+
+        if ((array)$objectList) {
+            $columns = $this->getColumns();
+
+            foreach ($objectList as $product) {
+                if (property_exists($product, $this->id_column) && filter_var($product->{$this->id_column}, FILTER_VALIDATE_INT)) {
+                    foreach ($columns as $nameField) {
+                        if (empty((string)$product->$nameField) || !property_exists($product, $nameField)) {
+                            $data[$nameField] = 'empty';
+                        } else {
+                            $data[$nameField] = (string)$product->$nameField;
+                        }
+                    }
+
+                    $checkValid = $this->validDataProduct($data);
+
+                    if (empty($checkValid['text']) && $checkValid['status'] === 'ok') {
+                        $validData = $this->validValues($data);
+
+                        if ($this->getItem($product->{$this->id_column})) {
+                            $id = (string)$product->{$this->id_column};
+                            unset($data['id']);
+
+                            //updateItem
+                        } else {
+                            //addItem
+                        }
+                    } else {
+                        $problemText .= $checkValid['text'];
+                    }
+
+
+
+
+
+                    // var_dump($data);
+                    // echo '<br><br>';
+
+
+                    // if ($this->getItem($product->{$this->id_column})) {
+                    //     array_shift($columns);
+                    //     $id = (string)$product->{$this->id_column};
+
+                    // }
+                }
+            }
+        }
+
+        if (!empty($problemText)) {
+            $problemText .= 'Виправте файл для даних продуктів, та відправте знову. В інших продуктах проблем не виникло і їх було додано в базу даних';
+        }
+
+        var_dump($problemText);
+    }
 }

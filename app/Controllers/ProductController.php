@@ -159,32 +159,65 @@ class ProductController extends Controller
 
     public function unloadAction()
     {
-        $products = $this->getModel('Product')
-            ->initCollection()
-            ->getCollection()->select();
-        $columns = $this->getModel('Product')
-            ->getColumns();
+        if (Helper::isAdmin()) {
+            $products = $this->getModel('Product')
+                ->initCollection()
+                ->getCollection()->select();
+            $columns = $this->getModel('Product')
+                ->getColumns();
 
-        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" ?><products/>');
+            $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" ?><products/>');
 
-        foreach ($products as $product) {
-            $xmlProduct = $xml->addChild('product');
+            foreach ($products as $product) {
+                $xmlProduct = $xml->addChild('product');
 
-            foreach ($columns as $field) {
-                $xmlProduct->addChild($field, $product[$field]);
+                foreach ($columns as $field) {
+                    $xmlProduct->addChild($field, $product[$field]);
+                }
             }
+
+            $dom = new \DOMDocument("1.0");
+            $dom->preserveWhiteSpace = false;
+            $dom->formatOutput = true;
+            $dom->loadXML($xml->asXML());
+
+            $file = fopen('public/products.xml', 'w');
+            fwrite($file, $dom->saveXML());
+            fclose($file);
+
+            Helper::redirectDownload('public/products.xml');
+        } else {
+            Helper::redirect("/error/error404");
         }
+    }
 
-        $dom = new \DOMDocument("1.0");
-        $dom->preserveWhiteSpace = false;
-        $dom->formatOutput = true;
-        $dom->loadXML($xml->asXML());
+    public function uploadAction()
+    {
+        if (Helper::isAdmin()) {
+            $this->set("title", "Завантаження файлів");
+            $model = $this->getModel('Product');
 
-        $file = fopen('public/products.xml', 'w');
-        fwrite($file, $dom->saveXML());
-        fclose($file);
+            $checkFile = $model->fileСheck();
 
-        Helper::redirectDownload('public/products.xml');
+            if ($checkFile) {
+                $use_errors = libxml_use_internal_errors(true);
+                $xml = simplexml_load_file($_FILES['userfile']['tmp_name']);
+                if ($xml) {
+                    $model->updateProductList($xml);
+                } else {
+                    $model->initStatus(2, 'Неправильно сформовано вміст файла');
+                }
+
+                libxml_clear_errors();
+                libxml_use_internal_errors($use_errors);
+            }
+
+
+            $this->renderLayout();
+            $model->initStatus();
+        } else {
+            Helper::redirect("/error/error404");
+        }
     }
 
     /**
