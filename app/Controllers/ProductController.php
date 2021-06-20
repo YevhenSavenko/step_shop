@@ -5,6 +5,7 @@ namespace Controllers;
 use Core\Controller;
 use Core\DB;
 use Core\Helper;
+use Core\Route;
 use Core\View;
 
 /**
@@ -154,6 +155,36 @@ class ProductController extends Controller
         } else {
             Helper::redirect("/error/error404");
         }
+    }
+
+    public function unloadAction()
+    {
+        $products = $this->getModel('Product')
+            ->initCollection()
+            ->getCollection()->select();
+        $columns = $this->getModel('Product')
+            ->getColumns();
+
+        $xml = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" ?><products/>');
+
+        foreach ($products as $product) {
+            $xmlProduct = $xml->addChild('product');
+
+            foreach ($columns as $field) {
+                $xmlProduct->addChild($field, $product[$field]);
+            }
+        }
+
+        $dom = new \DOMDocument("1.0");
+        $dom->preserveWhiteSpace = false;
+        $dom->formatOutput = true;
+        $dom->loadXML($xml->asXML());
+
+        $file = fopen('public/products.xml', 'w');
+        fwrite($file, $dom->saveXML());
+        fclose($file);
+
+        Helper::redirectDownload('public/products.xml');
     }
 
     /**

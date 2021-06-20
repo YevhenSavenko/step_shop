@@ -15,10 +15,18 @@ class Helper
 
 
         $server_host = $protocol . '://' . $_SERVER['HTTP_HOST'];
-        $url = $server_host . route::getBP() . $path;
+        $url = $server_host . Route::getBP() . $path;
 
 
         header("Location: $url");
+    }
+
+    public static function redirectDownload($path)
+    {
+        header('Content-type: application/xml');
+        header('Content-Disposition: attachment; filename="products.xml"');
+
+        readfile($path);
     }
 
     public static function getCustomer()

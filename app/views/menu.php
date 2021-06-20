@@ -8,9 +8,21 @@ use Core\Helper;
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
         <?php foreach ($this->get('menuCollection') as $item) : ?>
-          <li class="navigate-link nav-item nav-link">
-            <?= \Core\Url::getLink($item['path'], $item['name']); ?>
-          </li>
+          <?php
+            $path = $item['path'];
+            $name =  $item['name'];
+          ?>
+          <?php if ($item['active'] === 2) : ?>
+            <?php if (!Helper::isAdmin()) : ?>
+              <?php $path = $name = '' ?>
+            <?php endif ?>
+          <?php endif ?>
+
+          <?php if (!empty($path) && !empty($name)) : ?>
+            <li class="navigate-link nav-item nav-link">
+              <?= \Core\Url::getLink($item['path'], $item['name']); ?>
+            </li>
+          <?php endif ?>
         <?php endforeach; ?>
       </ul>
 
