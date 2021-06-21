@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Июн 15 2021 г., 17:51
+-- Время создания: Июн 21 2021 г., 11:03
 -- Версия сервера: 8.0.15
 -- Версия PHP: 7.3.9
 
@@ -72,7 +72,9 @@ CREATE TABLE `menu` (
 INSERT INTO `menu` (`id`, `name`, `path`, `active`, `sort_order`) VALUES
 (1, 'Товари', '/product/list', 1, 1),
 (2, 'Клієнти', '/customer/list', 1, 2),
-(3, 'Тест', '/test/test', 1, 3);
+(3, 'Тест', '/test/test', 1, 3),
+(4, 'Експорт', '/product/unload', 2, 4),
+(7, 'Імпорт', '/product/upload', 2, 5);
 
 -- --------------------------------------------------------
 
@@ -100,7 +102,8 @@ INSERT INTO `orders` (`id`, `customer_id`, `first_name`, `last_name`, `telephone
 (38, 18, 'Test', 'Customer', '+380999227744', 'customer@gmail.com', 'Chicago', '60100.00', '2021-06-15 15:45:38'),
 (39, 17, 'Viktor', 'Levy', '+380999227744', 'zkhanter172@gmail.com555', 'Kiev', '60000.00', '2021-06-15 15:46:36'),
 (40, 17, 'Viktor', 'Levy', '+380999227744', 'zkhanter172@gmail.com555', 'Kiev', '8995.34', '2021-06-15 15:47:10'),
-(41, 16, 'Eugene', 'Savenko', '+380999227744', 'zkhanter172@gmail.com007', 'Mukachevo', '340.00', '2021-06-15 15:48:12');
+(41, 16, 'Eugene', 'Savenko', '+380999227744', 'zkhanter172@gmail.com007', 'Mukachevo', '340.00', '2021-06-15 15:48:12'),
+(42, NULL, 'sdf', 'sdfsdf', '+380999227744', 'zkhanter172@gmail.com1', 'івів', '1475.34', '2021-06-15 18:36:20');
 
 -- --------------------------------------------------------
 
@@ -128,7 +131,9 @@ INSERT INTO `order_products` (`id`, `order_id`, `product_id`, `qty_order`) VALUE
 (6, 40, 64, 2),
 (7, 40, 67, 1),
 (8, 41, 64, 2),
-(9, 41, 68, 2);
+(9, 41, 68, 2),
+(10, 42, 45, 1),
+(11, 42, 68, 1);
 
 -- --------------------------------------------------------
 
@@ -150,8 +155,9 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `sku`, `name`, `price`, `qty`, `description`) VALUES
-(3, 't00003', 'Телефон 3', '10798.80', '3.000', '<h1>Телефон 3</h1>'),
-(45, 'ttt5555555555', 'MotorollaREd', '1355.34', '60.000', 'lorem'),
+(3, 't00003', 'Телефон 3', '10798.80', '3.000', '&lt;h1&gt;Телефон 3&lt;/h1&gt;'),
+(15, '77777', 'Аксесуар 3', '170.00', '10.000', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad facilis officiis perspiciatis expedita totam quidem odit rerum nemo, a, voluptas, exercitationem voluptates laborum sed eum.'),
+(45, 'ttt5555555555', 'MotorollaREd', '1355.34', '60.000', 'lorem2'),
 (63, 'ttt22007', 'Nokia', '2500.00', '10.000', 'Lorem2'),
 (64, 'ttt000000', 'Аксесуар', '50.00', '5.000', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad facilis officiis perspiciatis expedita totam quidem odit rerum nemo, a, voluptas, exercitationem voluptates laborum sed eum.\r\n'),
 (65, 'ttt223456', 'Iphone 25', '60000.00', '60.000', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad facilis officiis perspiciatis expedita totam quidem odit rerum nemo, a, voluptas, exercitationem voluptates laborum sed eum.'),
@@ -211,25 +217,25 @@ ALTER TABLE `customer`
 -- AUTO_INCREMENT для таблицы `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT для таблицы `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'pk', AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'pk', AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT для таблицы `order_products`
 --
 ALTER TABLE `order_products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'pk', AUTO_INCREMENT=10;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT COMMENT 'pk', AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `products`
 --
 ALTER TABLE `products`
-  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
+  MODIFY `id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

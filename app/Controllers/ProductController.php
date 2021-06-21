@@ -139,7 +139,7 @@ class ProductController extends Controller
             $id = $this->getId();
 
             if ($id && $model->getItem($id)) {
-                if (array_key_exists($id, $_SESSION['products']['basket']['id'])) {
+                if (isset($_SESSION['products']['basket']['id']) && array_key_exists($id, $_SESSION['products']['basket']['id'])) {
                     unset($_SESSION['products']['basket']['id'][$id]);
                     $_SESSION['products']['basket']['total'] = $_SESSION['products']['basket']['total'] - $model->getItem($id)['price'];
                 }
