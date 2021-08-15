@@ -81,8 +81,9 @@ class View
         return file_exists($path) ? $path : $path404;
     }
 
-    private function getBP(): string
+    private function getBP()
     {
+        $ret = Route::getBP();
         return Route::getBP();
     }
 

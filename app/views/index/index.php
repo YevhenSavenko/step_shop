@@ -1,6 +1,4 @@
-<?php
-
-use Core\Helper; ?>
+<?php use Core\Helper; ?>
 
 <div class="row text-center my-5">
     <?php $user = Helper::getCustomer() ?>

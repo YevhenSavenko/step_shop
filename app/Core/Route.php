@@ -30,7 +30,7 @@ class Route
      */
     public static function getBasePath()
     {
-        $base_path = substr(ROOT, strlen($_SERVER['DOCUMENT_ROOT']));
+        $base_path = substr(\ROOT, trim(strlen($_SERVER['DOCUMENT_ROOT'])), '/');
         if (DS !== '/') {
             $base_path = str_replace(DS, '/', $base_path);
         }
@@ -42,6 +42,7 @@ class Route
      */
     public static function init(string $route = null)
     {
+
         if (!$route) {
             $request = explode('?', $_SERVER['REQUEST_URI']);
             $uri = $request[0];
@@ -58,18 +59,14 @@ class Route
         self::$action = !empty($route_array[1]) ? $route_array[1] : 'index';
     }
 
-    /**
-     * @return null
-     */
-    public static function getAction()
+
+    public static function getAction(): string
     {
         return self::$action;
     }
 
-    /**
-     * @return null
-     */
-    public static function getController()
+
+    public static function getController(): string
     {
         return self::$controller;
     }

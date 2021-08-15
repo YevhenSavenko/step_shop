@@ -44,6 +44,7 @@ class Model implements DbModelInterface
 
     /**
      * @return array
+     * Deprecated
      */
     public function getColumns()
     {

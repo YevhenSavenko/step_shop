@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Core;
@@ -46,4 +47,39 @@ class App
 
         $controller->$action();
     }
+
+//    public static function run(string $path = null): void
+//    {
+//        Route::init($path);
+//
+//        $controller = sprintf(
+//            "\\Controller\\%s\\%s",
+//            ucfirst(Route::getController()),
+//            ucfirst(Route::getAction())
+//        );
+//
+//        try {
+//            self::checkPathToClass($controller);
+//        } catch (\Exception $e) {
+//            $controller = '\\Controller\\Error\\Error404';
+//        }
+//
+//        $controllerClass = new $controller();
+//        $controllerClass->execute();
+//
+//
+//    }
+//
+//    public static function checkPathToClass($controller): void
+//    {
+//        $controllerClassFile = sprintf(
+//            "%s%s.php",
+//            self::getAppDir(),
+//            str_replace('\\', \DS, $controller)
+//        );
+//
+//        if (!file_exists($controllerClassFile)) {
+//            throw new \LogicException();
+//        }
+//    }
 }

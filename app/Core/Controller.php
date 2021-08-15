@@ -28,7 +28,7 @@ class Controller
     public function renderLayout()
     {
         $this->set('menuCollection', $this->getMenuCollection());
-        $menu =  new View($this->data, $this->get('menuPath'));
+        $menu = new View($this->data, $this->get('menuPath'));
 
         $content = new View($this->data);
 
@@ -47,8 +47,7 @@ class Controller
     public function getModel($name)
     {
         $name = '\\Models\\' . ucfirst($name);
-        $model = new $name();
-        return $model;
+        return new $name();
     }
 
     /**

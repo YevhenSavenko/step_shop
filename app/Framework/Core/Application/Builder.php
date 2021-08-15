@@ -36,4 +36,9 @@ class Builder
         $this->setData('menuCollection', $menuCollection);
     }
 
+    public function setPageStyle($href, $rel, $integrity, $crossorigin)
+    {
+
+    }
+
 }
