@@ -1,10 +1,10 @@
 <?php
 
-namespace Settings\Layout\Validator;
+namespace Framework\Settings\Layout\Validator;
 
 use Framework\API\Data\Validator\CompositeValidatorInterface;
 
-class ConfigLinksValidatorComposite implements CompositeValidatorInterface
+class ConfigScriptsValidatorComposite implements CompositeValidatorInterface
 {
     private $validators = [];
 
@@ -12,10 +12,9 @@ class ConfigLinksValidatorComposite implements CompositeValidatorInterface
 
     public function __construct()
     {
-        $this->validators[] = new HrefValidator();
-        $this->validators[] = new RelValidator();
-        $this->validators[] = new CrossoriginValidator();
+        $this->validators[] = new SrcValidator();
         $this->validators[] = new IntegrityValidator();
+        $this->validators[] = new CrossoriginValidator();
     }
 
     public function validate($params): string

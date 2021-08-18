@@ -4,11 +4,11 @@
  * Set styles and scripts
  */
 
-namespace Settings\Layout;
+namespace Framework\Settings\Layout;
 
 use Framework\Request\Route;
-use Settings\Layout\Validator\ConfigLinksValidatorComposite;
-use Settings\Layout\Validator\ConfigScriptsValidatorComposite;
+use Framework\Settings\Layout\Validator\ConfigLinksValidatorComposite;
+use Framework\Settings\Layout\Validator\ConfigScriptsValidatorComposite;
 
 class Config
 {
@@ -47,7 +47,7 @@ class Config
             ['src_custom' => '/js/script.js'],
             ['src_custom' => '/js/slider.js'],
             ['src_custom' => '/js/input.js'],
-            ['src_custom' => '/js/upload.jss'],
+            ['src_custom' => '/js/upload.js'],
             [
                 'src' => 'https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js',
                 'integrity' => 'sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4',

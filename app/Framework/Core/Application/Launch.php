@@ -22,6 +22,7 @@ class Launch
             $controller = '\\Controller\\Error\\Error404';
         }
 
+
         $controllerClass = new $controller();
         $data = $controllerClass->execute();
 
