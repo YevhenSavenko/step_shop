@@ -2,8 +2,9 @@
 
 namespace Model\Menu;
 
-use Framework\API\Data\Model\Menu\MenuInterface;
+
 use Framework\Model\AbstractModel;
+use Model\API\Model\Menu\MenuInterface;
 
 class Menu extends AbstractModel implements MenuInterface
 {
@@ -53,8 +54,7 @@ class Menu extends AbstractModel implements MenuInterface
      */
     public function setId($id): MenuInterface
     {
-        $this->setData($id, self::ID);
-        return $this;
+        return $this->setData($id, self::ID);
     }
 
     /**
@@ -63,8 +63,7 @@ class Menu extends AbstractModel implements MenuInterface
      */
     public function setName($name): MenuInterface
     {
-        $this->setData($name, self::NAME);
-        return $this;
+        return $this->setData($name, self::NAME);
     }
 
     /**
@@ -73,8 +72,7 @@ class Menu extends AbstractModel implements MenuInterface
      */
     public function setPath($path): MenuInterface
     {
-        $this->setData($path, self::PATH);
-        return $this;
+        return $this->setData($path, self::PATH);
     }
 
     /**
@@ -83,8 +81,7 @@ class Menu extends AbstractModel implements MenuInterface
      */
     public function setIsActive(int $isActive): MenuInterface
     {
-        $this->setData((int)$isActive, self::IS_ACTIVE);
-        return $this;
+        return $this->setData((int)$isActive, self::IS_ACTIVE);
     }
 
     /**
@@ -93,7 +90,6 @@ class Menu extends AbstractModel implements MenuInterface
      */
     public function setSortOrder($sortOrder): MenuInterface
     {
-        $this->setData($sortOrder, self::SORT_ORDER);
-        return $this;
+        return $this->setData($sortOrder, self::SORT_ORDER);
     }
 }

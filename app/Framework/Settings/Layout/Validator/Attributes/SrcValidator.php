@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\Settings\Layout\Validator;
+namespace Framework\Settings\Layout\Validator\Attributes;
 
 use Framework\API\Data\Validator\CompositeValidatorInterface;
 

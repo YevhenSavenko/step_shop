@@ -2,6 +2,8 @@
 
 namespace Framework\Request;
 
+use Framework\Core\Application\Launch;
+
 class Route
 {
     private static $controller = null;
@@ -41,6 +43,11 @@ class Route
             $base_path = str_replace(DS, '/', $base_path);
         }
         return $base_path;
+    }
+
+    public static function forward($route)
+    {
+        Launch::run($route);
     }
 
     public static function getAction(): string

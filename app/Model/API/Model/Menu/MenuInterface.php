@@ -1,6 +1,6 @@
 <?php
 
-namespace Framework\API\Data\Model\Menu;
+namespace Model\API\Model\Menu;
 
 interface MenuInterface
 {

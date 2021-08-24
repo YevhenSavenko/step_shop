@@ -3,6 +3,12 @@
 namespace Framework\Settings\Layout\Validator;
 
 use Framework\API\Data\Validator\CompositeValidatorInterface;
+use Framework\Settings\Layout\Validator\Attributes\
+{
+    SrcValidator,
+    IntegrityValidator,
+    CrossoriginValidator
+};
 
 class ConfigScriptsValidatorComposite implements CompositeValidatorInterface
 {
@@ -19,8 +25,8 @@ class ConfigScriptsValidatorComposite implements CompositeValidatorInterface
 
     public function validate($params): string
     {
-        foreach ($this->validators as $validator){
-            if($validator instanceof CompositeValidatorInterface){
+        foreach ($this->validators as $validator) {
+            if ($validator instanceof CompositeValidatorInterface) {
                 $this->result .= $validator->validate($params);
             }
         }

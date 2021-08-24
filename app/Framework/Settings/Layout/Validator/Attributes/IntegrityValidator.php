@@ -1,8 +1,8 @@
 <?php
 
-namespace Framework\Settings\Layout\Validator;
+namespace Framework\Settings\Layout\Validator\Attributes;
 
-use Framework\Api\Data\Validator\CompositeValidatorInterface;
+use Framework\API\Data\Validator\CompositeValidatorInterface;
 
 class IntegrityValidator implements CompositeValidatorInterface
 {
