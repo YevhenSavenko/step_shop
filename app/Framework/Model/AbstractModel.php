@@ -35,7 +35,13 @@ abstract class AbstractModel
 
     public function getId(): int
     {
-        return (int)$this->_idFieldName;
+        return (int)$this->data[$this->_idFieldName];
+    }
+
+    public function setId($id):self
+    {
+        (int)$this->data[$this->_idFieldName] = $id;
+        return $this;
     }
 
 }

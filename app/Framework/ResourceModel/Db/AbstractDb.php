@@ -43,12 +43,6 @@ abstract class AbstractDb extends Connection implements DbInterface
         return $this->_columns;
     }
 
-//    public function getId()
-//    {
-//        return
-//    }
-
-
     public function load($id): AbstractModel
     {
         $obj = new $this->_typeModel;
@@ -56,13 +50,13 @@ abstract class AbstractDb extends Connection implements DbInterface
         $result = $this->query($sql, array($id));
 
         if (empty($result)) {
-            throw new \LogicException("Сутність з id = {$id} не існує.");
+            throw new \LogicException("An entity with id = {$id} does not exist");
         }
 
         return $obj->setData($result[0]);
     }
 
-    public function save(AbstractModel $object)
+    public function save(AbstractModel $object): self
     {
         $sql = "insert into {$this->table_name} ";
         $fieldsName = [];

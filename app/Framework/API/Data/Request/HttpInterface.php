@@ -4,9 +4,9 @@ namespace Framework\API\Data\Request;
 
 interface HttpInterface
 {
-    public function getRequest(): array;
+    public function getRequest(): string;
 
-    public function getDataPost(): array;
+    public function getParams($key = null);
 
-    public function getDataGet(): array;
+    public static function urlBuilder($path, $params = []): string;
 }

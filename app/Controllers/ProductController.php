@@ -301,7 +301,7 @@ class ProductController extends Controller
         if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
             $min = $diapasone['min'];
             $max = $diapasone['max'];
-        } else if (isset($_COOKIE['min']) && isset($_COOKIE['min'])) {
+        } else if (isset($_COOKIE['min']) && isset($_COOKIE['max'])) {
             $min = $_COOKIE['min'];
             $max = $_COOKIE['max'];
         }

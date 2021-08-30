@@ -87,25 +87,25 @@ class Model implements DbModelInterface
      */
     public function filter($params)
     {
-        $sqlСondition = '';
+        $sqlCondition = '';
         $paramsQuery = [];
 
         if ($params) {
-            $sqlСondition = ' where ';
+            $sqlCondition = ' where ';
             $lastKey = array_key_last($params);
 
-            foreach ($params as $key => $vlaue) {
-                $sqlСondition .= " {$key} = ?";
+            foreach ($params as $key => $value) {
+                $sqlCondition .= " {$key} = ?";
 
                 if ($key !== $lastKey) {
-                    $sqlСondition .= " and";
+                    $sqlCondition .= " and";
                 }
 
-                $paramsQuery[] = $vlaue;
+                $paramsQuery[] = $value;
             }
         }
 
-        $this->sql .= $sqlСondition;
+        $this->sql .= $sqlCondition;
         $this->params = $paramsQuery;
 
         return $this;

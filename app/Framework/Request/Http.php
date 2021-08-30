@@ -6,30 +6,51 @@ use Framework\API\Data\Request\HttpInterface;
 
 class Http implements HttpInterface
 {
-    public function getRequest(): array
+    private $data;
+
+    public function getRequest(): string
     {
-        return $_REQUEST;
+        return filter_input(INPUT_SERVER, 'REQUEST_METHOD');
     }
 
-    public function getDataPost(): array
+    public function getParams($key = null)
     {
-        return $_POST;
+        if ($this->getRequest() === 'GET') {
+            $this->data = $_GET;
+        }
+
+        if ($this->getRequest() === 'POST') {
+            $this->data = $_POST;
+        }
+
+        if (isset($this->data[$key])) {
+            return $this->data[$key];
+        } else if ($key === null) {
+            return $this->data;
+        } else {
+            return null;
+        }
     }
 
-    public function getDataGet(): array
+    public function isAjax(): bool
     {
-        return $_GET;
+        if ($this->getParams('isAjax') == true) {
+            return true;
+        }
+
+        return false;
     }
 
-    public static function getLink($path, $name, $params = [])
+    public static function urlBuilder($path, $params = []): string
     {
         if (!empty($params)) {
-            $firts_key = array_keys($params)[0];
-            foreach($params as $key=>$value) {
-                $path .= ($key === $firts_key ? '?' : '&');
+            $firstKey = array_keys($params)[0];
+            foreach ($params as $key => $value) {
+                $path .= ($key === $firstKey ? '?' : '&');
                 $path .= "$key=$value";
             }
         }
-        return '<a href="' . Route::getBP() . $path .'">' .$name . '</a>';
+
+        return sprintf('%s%s', Route::getBP(), $path);
     }
 }

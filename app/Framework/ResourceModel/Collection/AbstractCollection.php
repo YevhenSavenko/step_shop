@@ -9,23 +9,23 @@ use Framework\ResourceModel\Db\Connection;
 
 abstract class AbstractCollection extends Connection
 {
-    public $table_name;
+    private $table_name;
 
-    public $id_column;
+    private $id_column;
 
     private $resource;
 
-    public $query;
+    private $query;
 
-    protected $collection;
+    private $collection;
 
     private $sortCompositeValidator;
 
-    public $filters = [];
+    private $filters = [];
 
-    public $paramsSql = [];
+    private $paramsSql = [];
 
-    public $sorting = [];
+    private $sorting = [];
 
     public function __construct()
     {
@@ -46,7 +46,7 @@ abstract class AbstractCollection extends Connection
 
     public function getSelect(): array
     {
-        if(count($this->collection)){
+        if (count($this->collection)) {
             $this->collection = [];
         }
 
@@ -64,7 +64,7 @@ abstract class AbstractCollection extends Connection
     /**
      * Deprecated
      */
-    public function queryCollection()
+    public function queryCollection(): self
     {
         if (null === $this->collection) {
             $ids = $this->query(sprintf(
@@ -86,7 +86,15 @@ abstract class AbstractCollection extends Connection
     {
         $data = [];
         $count = 0;
-        $arrayConditions = ['like' => 'LIKE', 'eq' => '=', 'neq' => '<>'];
+        $arrayConditions = [
+            'like' => 'LIKE',
+            'eq' => '=',
+            'neq' => '<>',
+            'gt' => '>',
+            'gteq' => '>=',
+            'lt' => '<',
+            'lteq' => '<='
+        ];
 
         foreach ($condition as $operator => &$value) {
             foreach ($value as $operatorInside => &$valueInside) {
@@ -148,7 +156,7 @@ abstract class AbstractCollection extends Connection
         return $this;
     }
 
-    public function setSort($fields, $sortBy)
+    public function setSort($fields, $sortBy): self
     {
         $arraySort = ['asc' => 'ASC', 'desc' => 'DESC'];
         $data = [];
@@ -177,7 +185,7 @@ abstract class AbstractCollection extends Connection
         return $this;
     }
 
-    public function builderQuery()
+    public function builderQuery(): self
     {
         if (count($this->filters)) {
             $this->builderWherePart();
@@ -198,7 +206,7 @@ abstract class AbstractCollection extends Connection
             if (\is_array($conditions)) {
                 $this->query .= \sprintf(' %s ', \implode(' OR ', $conditions));
             } else {
-                if(array_key_first($this->filters) === $key){
+                if (array_key_first($this->filters) === $key) {
                     $this->query .= \sprintf(' %s', $conditions);
                 } else {
                     $this->query .= \sprintf(' AND %s', $conditions);
@@ -210,13 +218,18 @@ abstract class AbstractCollection extends Connection
     public function builderSortPart()
     {
         $this->query .= ' ORDER BY';
+        $lastKey = array_key_last($this->sorting);
 
-        foreach ($this->sorting as $conditions) {
-            $this->query .= \sprintf(' %s', $conditions);
+        foreach ($this->sorting as $key => $conditions) {
+            if ($lastKey !== $key) {
+                $this->query .= \sprintf(' %s,', $conditions);
+            } else {
+                $this->query .= \sprintf(' %s', $conditions);
+            }
         }
     }
 
-    public function initCollection()
+    public function initCollection(): self
     {
         $this->query .= ';';
 
@@ -244,9 +257,13 @@ abstract class AbstractCollection extends Connection
         return $paramsString;
     }
 
-    /**
-     * Deprecated
-     */
+    public function getMaxValueByField($field)
+    {
+        $sql = "select max($field) as max from {$this->table_name};";
+        return $this->query($sql)[0]['max'];
+    }
+
+
     public function getCollection()
     {
         return $this->collection;

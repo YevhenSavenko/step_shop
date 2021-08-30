@@ -9,14 +9,6 @@ use Model\API\Model\Menu\MenuInterface;
 class Menu extends AbstractModel implements MenuInterface
 {
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return (int)$this->getData(self::ID);
-    }
-
-    /**
      * @return string
      */
     public function getName(): string
@@ -49,15 +41,6 @@ class Menu extends AbstractModel implements MenuInterface
     }
 
     /**
-     * @param $id
-     * @return MenuInterface
-     */
-    public function setId($id): MenuInterface
-    {
-        return $this->setData($id, self::ID);
-    }
-
-    /**
      * @param $name
      * @return MenuInterface
      */
@@ -81,7 +64,7 @@ class Menu extends AbstractModel implements MenuInterface
      */
     public function setIsActive(int $isActive): MenuInterface
     {
-        return $this->setData((int)$isActive, self::IS_ACTIVE);
+        return $this->setData($isActive, self::IS_ACTIVE);
     }
 
     /**

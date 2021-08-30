@@ -1,8 +1,4 @@
-<?php
-
-use Framework\Request\Http;
-
-?>
+<?php use Framework\Request\Http; ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5">
     <div class="container-fluid">
@@ -10,7 +6,9 @@ use Framework\Request\Http;
             <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-uppercase">
                 <?php foreach ($this->getData('menuCollection') as $item) : ?>
                     <li class="navigate-link nav-item nav-link">
-                        <?= Http::getLink($item->getPath(), $item->getName()) ?>
+                        <a href="<?= Http::urlBuilder($item->getPath()) ?>">
+                            <?= $item->getName() ?>
+                        </a>
                     </li>
                 <?php endforeach ?>
             </ul>

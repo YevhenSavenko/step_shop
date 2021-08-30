@@ -27,8 +27,6 @@ function setLeftValue() {
 
 	thumbLeft.style.left = percent + "%";
 	range.style.left = percent + "%";
-
-    
 }
 
 
@@ -121,7 +119,6 @@ if(inputLeft){
 }
 
 if(inputRight){
-
     inputRight.addEventListener("input", setRightValue);
     setRightValue();
 
@@ -165,13 +162,14 @@ if(max_input){
 
 function makeRequest() {
     let flag = 'flag=price';
+    let identify = 'isAjax=true';
 
     let request = new XMLHttpRequest();
     request.open('POST', window.location.href, true);
     
     request.addEventListener('readystatechange', function() {
     
-    if ((request.readyState==4) && (request.status==200)) {
+    if ((request.readyState===4) && (request.status===200)) {
         let price = JSON.parse(request.response);
         maxPrice = price;
         setRightValue();
@@ -179,6 +177,6 @@ function makeRequest() {
     }
     });
     request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-    request.send(`${flag}`);
+    request.send(`${flag}&${identify}`);
 }
 

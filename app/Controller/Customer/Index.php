@@ -17,9 +17,12 @@ class Index implements Action
         $this->collectionCustomer = new Customer();
     }
 
+
     public function execute()
     {
-        $this->setData('customers', $this->collectionCustomer->setSort(['customer_id'], 'asc')->getSelect());
+        $this->setData('customers', $this->collectionCustomer
+            ->setSort(['customer_id'], 'asc')
+            ->getSelect());
 
         return $this->_data;
     }

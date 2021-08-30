@@ -4,7 +4,6 @@ namespace Model\API\Model\Menu;
 
 interface MenuInterface
 {
-    const ID = 'id';
     const NAME = 'name';
     const PATH = 'path';
     const IS_ACTIVE = 'active';
@@ -29,12 +28,6 @@ interface MenuInterface
      * @return int
      */
     public function getSortOrder(): int;
-
-    /**
-     * @param $id
-     * @return MenuInterface
-     */
-    public function setId($id): MenuInterface;
 
     /**
      * @param $name
