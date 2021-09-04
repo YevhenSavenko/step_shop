@@ -22,12 +22,12 @@ class Launch
             $controller = '\\Controller\\Error\\Error404';
         }
 
-
         $controllerClass = new $controller();
         $data = $controllerClass->execute();
 
         $build = new Builder($data);
         $build->renderLayout();
+        $build->resetMessageManager();
     }
 
     public static function checkPathToClass($controller): void
@@ -45,17 +45,27 @@ class Launch
 
     public static function getAppDir(): string
     {
-        return ROOT . DS . 'app';
+        return \ROOT . \DS . 'app';
     }
 
     public static function getLayoutPath(): string
     {
-        return self::getAppDir() . \DS . 'Framework' . \DS . 'Layout' . \DS  . 'layout.php';
+        return self::getFrameworkDir() . \DS . 'Layout' . \DS . 'layout.php';
     }
 
     public static function getViewDir(): string
     {
-        return self::getAppDir() . DS . 'views';
+        return self::getAppDir() . \DS . 'views';
+    }
+
+    public static function getFrameworkDir(): string
+    {
+        return self::getAppDir() . \DS .  'Framework';
+    }
+
+    public static function getStaticViewDir(): string
+    {
+        return self::getFrameworkDir() . \DS . 'Static' . \DS . 'views';
     }
 
 }

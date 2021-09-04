@@ -3,6 +3,7 @@
 namespace Framework\Core\Application;
 
 use Framework\Api\Traits\DataControl;
+use Framework\MessageManager\MessageManager;
 use Model\Menu\ResourceModel\Collection\Menu;
 use Framework\Request\Route;
 
@@ -16,13 +17,17 @@ class Builder
 
     private $menuCollection;
 
+    private $messageManager;
+
     public function __construct($data)
     {
         $this->_data = $data;
         $this->layoutPath = Launch::getLayoutPath();
         $this->setData('menu', Launch::getViewDir() . \DS . 'menu.php');
+        $this->setData('status', Launch::getStaticViewDir() . \DS . 'status.php');
         $this->setData('template', $this->setDefaultPath());
         $this->menuCollection = new Menu();
+        $this->messageManager = new MessageManager();
     }
 
     public function renderLayout()
@@ -60,6 +65,11 @@ class Builder
         }
 
         return $viewPath;
+    }
+
+    public function resetMessageManager()
+    {
+        $this->messageManager->resetMessageStatus();
     }
 
     public function foldErrorPage(): string

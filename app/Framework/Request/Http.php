@@ -41,6 +41,22 @@ class Http implements HttpInterface
         return false;
     }
 
+    public function redirect($path, $params = [])
+    {
+        $protocol = '';
+        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') {
+            $protocol = 'https';
+        } else {
+            $protocol = 'http';
+        }
+
+        $server_host = $protocol . '://' . $_SERVER['HTTP_HOST'];
+        $url = $server_host . self::urlBuilder($path, $params);
+
+        header("Location: $url");
+        exit;
+    }
+
     public static function urlBuilder($path, $params = []): string
     {
         if (!empty($params)) {

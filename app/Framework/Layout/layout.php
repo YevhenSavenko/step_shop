@@ -13,11 +13,11 @@
                 <h1 class="fw-bold">Test Shop</h1>
             </div>
         </div>
-
         <div id="header" class="pb-4">
             <?php require_once $this->getData('menu'); ?>
         </div>
         <div class="container">
+            <?php require_once $this->getData('status') ?>
             <?php require_once $this->getData('template'); ?>
         </div>
 

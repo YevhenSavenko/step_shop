@@ -2,10 +2,11 @@
 
 namespace Framework\Model;
 
+use Framework\Core\Data\DataObject;
 
-abstract class AbstractModel
+abstract class AbstractModel extends DataObject
 {
-    private $_idFieldName = 'id';
+    private $idFieldName = 'id';
 
     private $data = [];
 
@@ -35,12 +36,12 @@ abstract class AbstractModel
 
     public function getId(): int
     {
-        return (int)$this->data[$this->_idFieldName];
+        return (int)$this->data[$this->idFieldName];
     }
 
     public function setId($id):self
     {
-        (int)$this->data[$this->_idFieldName] = $id;
+        (int)$this->data[$this->idFieldName] = $id;
         return $this;
     }
 

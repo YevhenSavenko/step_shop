@@ -1,14 +1,13 @@
-<?php use Core\View; ?>
-<?php require_once View::getViewDir() . \DS . 'static' . \DS . 'status.php'; ?>
+<?php use Framework\Request\Http; ?>
 
 <div class="my-5">
     <h2 class="text-center text-uppercase fw-bolder">
-        <?= $this->get('title') ?>
+        <?= $this->getData('title') ?>
     </h2>
 </div>
 
 <div class="login row justify-content-center mt-5">
-    <form class="col-md-4" action=<?= $_SERVER['REQUEST_URI'] ?> method="POST" enctype="application/x-www-form-urlencoded">
+    <form class="col-md-4" action=<?= Http::urlBuilder('/customer/authorization/') ?> method="POST" enctype="application/x-www-form-urlencoded">
         <div class="col-md-12 my-4">
             <input name="email" type="email" class="form-control input__register" placeholder="Емейл">
         </div>

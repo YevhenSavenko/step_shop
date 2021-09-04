@@ -15,7 +15,7 @@
 
             <ul class="me-5 navbar-nav  navbar-right">
                 <li class="nav-item me-3 menu-basket">
-                    <a class="nav-link" href="/basket/list/">
+                    <a class="nav-link" href="<?= Http::urlBuilder('/basket/list/') ?>">
                         <i class="bi bi-cart pe-2 image-basket"></i>
                         Кошик: 0 ₴
                     </a>
@@ -23,13 +23,13 @@
             </ul>
             <ul class="navbar-nav  navbar-right">
                 <li class="nav-item me-3">
-                    <a class="nav-link" href="/customer/register/">
+                    <a class="nav-link" href="<?= Http::urlBuilder('/customer/register/') ?>">
                         <i class="bi bi-person-fill pe-2"></i>
                         Реєстрація
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/customer/login/">
+                    <a class="nav-link" href="<?= Http::urlBuilder('/customer/login/') ?>">
                         <i class="bi bi-door-closed-fill pe-2"></i>
                         Ввійти
                     </a>
