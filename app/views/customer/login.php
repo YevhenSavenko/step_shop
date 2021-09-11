@@ -1,5 +1,3 @@
-<?php use Framework\Request\Http; ?>
-
 <div class="my-5">
     <h2 class="text-center text-uppercase fw-bolder">
         <?= $this->getData('title') ?>
@@ -7,7 +5,7 @@
 </div>
 
 <div class="login row justify-content-center mt-5">
-    <form class="col-md-4" action=<?= Http::urlBuilder('/customer/authorization/') ?> method="POST" enctype="application/x-www-form-urlencoded">
+    <form class="col-md-4" action=<?= \Framework\Request\Http::urlBuilder('/customer/authorization/') ?> method="POST" enctype="application/x-www-form-urlencoded">
         <div class="col-md-12 my-4">
             <input name="email" type="email" class="form-control input__register" placeholder="Емейл">
         </div>

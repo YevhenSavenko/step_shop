@@ -57,7 +57,7 @@ class Catalog implements Action
         $minPrice = $this->request->getParams('min-price');
         $maxPrice = $this->request->getParams('max-price');
 
-        if (filter_input(INPUT_SERVER, 'REQUEST_METHOD') === 'POST') {
+        if ($this->request->getRequest() === 'POST') {
             setcookie('min', $minPrice, 0, '/', '', 0, 1);
             setcookie('max', $maxPrice, 0, '/', '', 0, 1);
         } else {

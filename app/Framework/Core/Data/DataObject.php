@@ -23,6 +23,7 @@ class DataObject
         $request = \substr($dataKey, 0, 3);
         $operation = sprintf('%sData', $request);
 
+
         if ($request === 'get') {
             return $this->$operation(substr($dataKey, 4));
         } else if ($request === 'set') {

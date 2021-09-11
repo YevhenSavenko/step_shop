@@ -1,14 +1,11 @@
-<?php use Core\View; ?>
-<?php require_once View::getViewDir() . \DS . 'static' . \DS . 'status.php'; ?>
-
 <div class="my-5">
     <h2 class="text-center text-uppercase fw-bolder">
-        <?= $this->get('title') ?>
+        <?= $this->getData('title') ?>
     </h2>
 </div>
 
 <div class="register mt-5 row justify-content-center">
-    <form class="row col-md-7" action="<?= $_SERVER['REQUEST_URI'] ?>" method="POST" enctype="application/x-www-form-urlencoded">
+    <form class="row col-md-7" action="<?= \Framework\Request\Http::urlBuilder('/customer/registration/') ?>" method="POST" enctype="application/x-www-form-urlencoded">
         <div class="col-md-6">
             <input name="last_name" type="text" class="form-control input__register" placeholder="Прізвище">
         </div>

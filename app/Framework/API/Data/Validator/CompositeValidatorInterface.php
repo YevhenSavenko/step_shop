@@ -4,5 +4,9 @@ namespace Framework\API\Data\Validator;
 
 interface CompositeValidatorInterface
 {
-    public function validate($params): string;
+    /**
+     * @param $params
+     * @return string|bool
+     */
+    public function validate($params): ?string;
 }
