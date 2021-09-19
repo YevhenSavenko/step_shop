@@ -60,38 +60,4 @@ class Save implements Action
         $this->messageManager->accessMessage('Додавання товару пройшло успішно');
         $this->request->redirect('/product/edit', ['id' => $id]);
     }
-
-
-    //if (Helper::isAdmin()) {
-//$model = $this->getModel('Product');
-//$columns = $model->getColumns();
-//$this->set('saved', 0);
-//$this->set("title", "Редагування товару");
-//$this->set('id', '');
-//$id = $this->getId();
-//if ($id) {
-//if ($model->getItem($id)) {
-//$this->set('headding', 'Редагування товару');
-//$this->set('btn', 'Редагувати');
-//$this->set('product', $model->getItem($id));
-//$this->set('saved', 1);
-//} else {
-//    $this->set('id', $id);
-//}
-//}
-//
-//$edit = filter_input(INPUT_POST, 'edited');
-//if ($edit) {
-//    $values = $model->validValues($model->getPostValues());
-//    $model->updateItem($values, $columns, $id)->initStatus(1, 'Редагування відбулось успішно');
-//
-//    Helper::redirect('/product/list');
-//    return;
-//}
-//
-//$this->renderLayout();
-//$model->initStatus();
-//} else {
-//    Helper::redirect("/error/error404");
-//}
 }
