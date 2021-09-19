@@ -681,21 +681,9 @@ input[type="range"]::-webkit-slider-thumb {
   margin-top: 50px;
 }
 
-.cart__pay input {
-  display: block;
-  color: rgba(255, 255, 255, 0.55);
-  background: #212529;
-  width: 100%;
-  height: 100%;
-  font-weight: 600;
-  text-decoration: none;
-  letter-spacing: 1px;
-  padding: 10px 35px;
-  transition: all 0.2s;
-}
-
 .cart__reset a:hover,
 .cart__index a:hover,
+.cart__pay a:hover,
 .cart__pay input:hover {
   color: #e2e2e2;
   background: #212529a6;
@@ -703,6 +691,7 @@ input[type="range"]::-webkit-slider-thumb {
 }
 
 .cart__index a,
+.cart__pay a,
 .cart__reset a {
   display: block;
   text-align: center;

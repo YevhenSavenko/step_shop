@@ -41,7 +41,7 @@ function addHandlers(){
 }
 
 function updateCart(id, qty){
-      let flag = 'flag=update';
+      let flag = 'isAjax=true';
       id = 'id=' + encodeURIComponent(id);
       qty = 'qty=' + encodeURIComponent(qty);
 

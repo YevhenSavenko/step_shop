@@ -1,5 +1,5 @@
-<?php $orders = $this->get('orders') ?>
-<?php if ($orders) : ?>
+<?php $orders = $this->getData('orders') ?>
+<?php if (count($orders) > 0) : ?>
     <div class="orders__about">
         <div class="orders__title">
             <h2 class="text-center text-uppercase fw-bolder my-5">
@@ -8,9 +8,9 @@
         </div>
 
         <div class="orders__body">
-            <?php foreach ($this->get('orders') as $key => $value) : ?>
+            <?php foreach ($orders as $order) : ?>
                 <div class="orders__id">
-                    Замовлення №<?= $value['info']['id'] ?>
+                    Замовлення №<?= $order->getId() ?>
                 </div>
                 <div class="orders__item">
                     <div class="cart__titles-table orders__titles-table">
@@ -27,7 +27,7 @@
                             Сума
                         </div>
                     </div>
-                    <?php foreach ($value['info']['products'] as $product) : ?>
+                    <?php foreach ($order->getProducts() as $product) : ?>
                         <div class="cart__item orders__points">
                             <div class="cart__item-wrapper">
                                 <div class="cart__empty-img">
@@ -35,21 +35,21 @@
                                 </div>
                                 <div class="cart__info-product">
                                     <div class="cart__info-sku">
-                                        <?= $product['sku'] ?>
+                                        <?= $product->getSku() ?>
                                     </div>
                                     <div class="cart__info-title">
-                                        <?= $product['name'] ?>
+                                        <?= $product->getName()?>
                                     </div>
                                 </div>
                             </div>
                             <div class="cart__inputs text-center orders__qty">
-                                <span><?= $product['qty_order'] ?></span>
+                                <span><?= $product->getQty() ?></span>
                             </div>
                             <div class="cart__price text-center">
-                                <?= $product['price'] ?>₴
+                                <?= $product->getPrice()?>₴
                             </div>
                             <div class="cart__total text-center">
-                                <?= $product['price'] * $product['qty_order'] ?> ₴
+                                <?= $product->getPrice() * $product->getQty() ?> ₴
                             </div>
                         </div>
                     <?php endforeach ?>
@@ -59,7 +59,7 @@
                                 Прізвище та ім'я:
                             </div>
                             <div class="right__info">
-                                <?= $value['info']['first_name'] . ' ' .  $value['info']['last_name'] ?>
+                                <?= $order->getFirstName() . ' ' .  $order->getLastName() ?>
                             </div>
                         </div>
                         <div class="person__phone info__about">
@@ -67,7 +67,7 @@
                                 Номер телефону:
                             </div>
                             <div class="right__info info__about">
-                                <?= $value['info']['telephone'] ?>
+                                <?= $order->getTelephone() ?>
                             </div>
                         </div>
                         <div class="person__email info__about">
@@ -75,7 +75,7 @@
                                 Email:
                             </div>
                             <div class="right__info info__about">
-                                <?= $value['info']['email'] ?>
+                                <?= $order->getEmail() ?>
                             </div>
                         </div>
                         <div class="person__address info__about">
@@ -83,16 +83,16 @@
                                 Адреса доставки:
                             </div>
                             <div class="right__info">
-                                <?= $value['info']['address'] ?>
+                                <?= $order->getAddress() ?>
                             </div>
                         </div>
                     </div>
                     <div class="orders__info">
                         <div class="orders__data">
-                            Час замовлення: <?= $value['info']['date'] ?>
+                            Час замовлення: <?= $order->getDate() ?>
                         </div>
                         <div class="orders__data">
-                            Сума замовлення: <?= $value['info']['total'] ?> ₴
+                            Сума замовлення: <?= $order->getTotal() ?> ₴
                         </div>
                     </div>
                 </div>

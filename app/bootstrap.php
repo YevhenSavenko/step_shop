@@ -5,6 +5,4 @@ require ROOT . '/app/Autoloader.php';
 require ROOT . '/app/etc/config.php';
 Autoloader::register();
 
-//\Core\App::run();
-
 \Framework\Core\Application\Launch::run();

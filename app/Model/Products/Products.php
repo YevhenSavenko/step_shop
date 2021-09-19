@@ -30,7 +30,7 @@ class Products extends AbstractModel implements ProductsInterface
 
     public function getDescription(): string
     {
-        return (int)$this->getData(self::DESCRIPTION);
+        return (string)$this->getData(self::DESCRIPTION);
     }
 
     public function setSku(string $sku): ProductsInterface

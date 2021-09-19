@@ -82,48 +82,39 @@ abstract class AbstractDb extends Connection implements DbInterface
         return $this;
     }
 
-    public function updateItem($values, $columns, $id)
+    public function update(AbstractModel $object): self
     {
         $params = [];
         $sql = "update $this->table_name set ";
 
-        foreach ($values as $key => $value) {
-            foreach ($columns as $index => $column) {
-                if ($key === $column) {
-                    $sql .= "{$column} = :{$column},";
-                    $params[":{$column}"] = $value;
-                }
+        foreach ($this->getColumns() as $key => $field){
+            if (isset($object->getData()[$field])) {
+                $sql .= "{$field} = :{$field},";
+                $params[":{$field}"] = $object->getData()[$field];
             }
         }
 
         $sql = trim($sql, ',') . " where {$this->id_column} = :id_where;";
+        $params[':id_where'] = $object->getId();
 
-        $params[':id_where'] = $id;
-
-        $db = new DB();
-        $db->query($sql, $params);
+        $this->query($sql, $params);
 
         return $this;
     }
 
 
-    public function delete(AbstractModel $object)
+    public function delete(AbstractModel $object): self
     {
-
-    }
-
-    public function deleteEntity(DbModelInterface $model)
-    {
-        $dbh = $this->getConnection();
         $sql = sprintf(
-            "DELETE FROM %s WHERE %s = ?;",
-            $model->getTableName(),
-            $model->getPrimaryKeyName()
+            'DELETE FROM %s WHERE %s = ?;',
+            $this->getTableName(),
+            $this->getPrimaryKeyName()
         );
 
-        $statement = $dbh->prepare($sql);
+        $params = [$object->getId()];
+        $this->query($sql, $params);
 
-        $statement->execute([$model->getId()]);
+        return $this;
     }
 
     public function getTableName(): string

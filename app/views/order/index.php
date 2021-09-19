@@ -1,9 +1,9 @@
 <?php
 
-use Core\View; ?>
-<?php require_once View::getViewDir() . \DS . 'static' . \DS . 'status.php'; ?>
+use Framework\Request\Http;
+$customerInfo = $this->getData('customer_info');
 
-<?php $user = $this->get('user') ?>
+?>
 
 <div class="my-5">
     <h2 class="text-center text-uppercase fw-bolder">
@@ -12,22 +12,28 @@ use Core\View; ?>
 </div>
 
 <div class="register mt-5 row justify-content-center">
-    <form class="row col-md-7" action="<?= $this->getBP() ?>/order/index" method="POST" enctype="application/x-www-form-urlencoded">
+    <form class="row col-md-7" action="<?= Http::urlBuilder('/order/arrange/') ?>" method="POST"
+          enctype="application/x-www-form-urlencoded">
         <div class="col-md-6">
-            <input name="last_name" type="text" class="form-control input__register" placeholder="Прізвище" value="<?= $user['last_name'] ?? '' ?>">
+            <input name="last_name" type="text" class="form-control input__register" placeholder="Прізвище"
+                   value="<?= $customerInfo !== null ? $customerInfo->getLastName() : '' ?>">
         </div>
         <div class=" col-md-6">
-            <input name="first_name" type="text" class="form-control input__register" placeholder="Ім'я" value="<?= $user['first_name'] ?? '' ?>">
+            <input name="first_name" type="text" class="form-control input__register" placeholder="Ім'я"
+                   value="<?= $customerInfo !== null ? $customerInfo->getFirstName() : '' ?>">
         </div>
         <div class="col-md-6 my-4">
-            <input name="telephone" type="tel" class="form-control input__register" placeholder="Мобільний номер" value="<?= $user['telephone'] ?? '' ?>">
+            <input name="telephone" type="tel" class="form-control input__register" placeholder="Мобільний номер"
+                   value="<?= $customerInfo !== null ? $customerInfo->getTelephone() : '' ?>">
         </div>
         <div class="col-md-6 my-4">
-            <input name="email" type="email" class="form-control input__register" placeholder="Емейл" value="<?= $user['email'] ?? '' ?>">
+            <input name="email" type="email" class="form-control input__register" placeholder="Емейл"
+                   value="<?= $customerInfo !== null ? $customerInfo->getEmail() : '' ?>">
         </div>
         <div class="row justify-content-center mb-5 pe-0">
             <div class="col-md-12 pe-0">
-                <textarea name="address" type="text" class="form-control input__register" rows="3" placeholder="Адрес доставки"><?= $user['address'] ?? '' ?></textarea>
+                <textarea name="address" type="text" class="form-control input__register" rows="3"
+                          placeholder="Адрес доставки"><?= $customerInfo !== null ? $customerInfo->getAddress() : '' ?></textarea>
             </div>
         </div>
 

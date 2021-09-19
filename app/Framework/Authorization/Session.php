@@ -3,7 +3,7 @@
 namespace Framework\Authorization;
 
 use Model\Customer\Customer;
-use \Model\Customer\ResourceModel\Customer as CustomerResourceModel;
+use Model\Customer\ResourceModel\Customer as CustomerResourceModel;
 
 class Session
 {
@@ -28,6 +28,18 @@ class Session
         return $this->customerLogin;
     }
 
+    public function isAdmin(): bool
+    {
+        if(null !== $this->isLogin()){
+            if($this->isLogin()->getAdminRole()){
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+
     public function clearSession()
     {
         $_SESSION = [];
@@ -38,5 +50,4 @@ class Session
 
         session_destroy();
     }
-
 }

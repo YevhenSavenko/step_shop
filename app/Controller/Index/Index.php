@@ -3,17 +3,13 @@
 namespace Controller\Index;
 
 use Framework\API\Data\Controller\Action\Action;
-use Framework\API\Traits\DataControl;
+use Framework\Request\Route;
 
 class Index implements Action
 {
-    use DataControl;
-
-    public function execute(): array
+    public function execute()
     {
-        $this->setData("title", "Test shop");
-
-        return $this->_data;
+        Route::forward('order/orders');
     }
 
 }

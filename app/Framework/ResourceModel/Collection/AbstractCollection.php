@@ -82,6 +82,21 @@ abstract class AbstractCollection extends Connection
         return $this;
     }
 
+    public function groupUpData($field, $value, $operator)
+    {
+        $paramsFilter = [];
+        foreach ($value as $productId => $qty) {
+            $paramsFilter[] = $this->valueFilterCheck($field, $productId);
+        }
+
+        $paramsFilter = sprintf('(%s)', implode(',', $paramsFilter));
+
+        $this->filters = array_merge(
+            $this->filters,
+            [sprintf('(`%s`.`%s` %s %s)', $this->table_name, $field, $operator, $paramsFilter)]
+        );
+    }
+
     public function addFieldToFilter($filterByField, $condition): self
     {
         $data = [];
@@ -93,24 +108,33 @@ abstract class AbstractCollection extends Connection
             'gt' => '>',
             'gteq' => '>=',
             'lt' => '<',
-            'lteq' => '<='
+            'lteq' => '<=',
+            'in' => 'IN'
         ];
 
-        foreach ($condition as $operator => &$value) {
-            foreach ($value as $operatorInside => &$valueInside) {
-                if (is_array($valueInside)) {
-                    $errorMessage = \sprintf('%s - Wrong number of arguments in %s', \date('Y-d-m H:i:s'), __METHOD__);
-                    throw new \ErrorException($errorMessage);
-                    break 2;
-                } else if ($operatorInside === 'like') {
-                    $valueInside = "%{$valueInside}%";
+        foreach ($condition as $operator => &$value){
+            if(is_array($value)){
+                foreach ($value as $operatorInside => &$valueInside){
+                    if(is_array($valueInside)){
+                        throw new \ErrorException(sprintf(
+                            '%s - Wrong number of arguments in %s',
+                            \date('Y-d-m H:i:s'),
+                            __METHOD__)
+                        );
+                    }
+
+                    $valueInside = $operatorInside === 'like' ? $valueInside = "%{$valueInside}%" : $valueInside;
                 }
             }
 
-            if ($operator === 'like') {
-                $value = "%{$value}%";
+            if (is_array($value) && $operator === 'in'){
+                $this->groupUpData($filterByField, $value, $operator);
+                return $this;
             }
         }
+
+        unset($value);
+        unset($valueInside);
 
         if (!is_array($condition)) {
             $condition = ['eq' => $condition];
@@ -261,6 +285,13 @@ abstract class AbstractCollection extends Connection
     {
         $sql = "select max($field) as max from {$this->table_name};";
         return $this->query($sql)[0]['max'];
+    }
+
+    public function getLastId()
+    {
+        $sql = "select last_insert_id() as last";
+
+        return $this->query($sql)[0]['last'];
     }
 
 

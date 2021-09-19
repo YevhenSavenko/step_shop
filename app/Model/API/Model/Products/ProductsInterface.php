@@ -4,7 +4,6 @@ namespace Model\Api\Model\Products;
 
 interface ProductsInterface
 {
-    const ID = 'id';
     const SKU = 'sku';
     const NAME = 'name';
     const PRICE = 'price';

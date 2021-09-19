@@ -1,5 +1,6 @@
 <?php
 use Framework\Request\Http;
+use Model\Basket\Basket;
 
 $minRangeForInput = $this->getData('minRange');
 $maxRangeForInput = $this->getData('maxRange');
@@ -54,18 +55,22 @@ $maxSavedPrice = $this->getData('max');
     </div>
 </div>
 
-<?php //if (Helper::isAdmin()) : ?>
-<!--    <div class="product">-->
-<!--        <p class="text-center my-3 row justify-content-around">-->
-<!--            <span class="btn-add col-md-3 me-5">-->
-<!--                --><?//= \Core\Url::getLink('/product/add', 'Додати товар +'); ?>
-<!--            </span>-->
-<!--            <span class="btn-add col-md-3">-->
-<!--                --><?//= \Core\Url::getLink('/order/all', 'Переглянути замовлення'); ?>
-<!--            </span>-->
-<!--        </p>-->
-<!--    </div>-->
-<?php //endif ?>
+<?php if ( $this->session->isAdmin()) : ?>
+    <div class="product">
+        <p class="text-center my-3 row justify-content-around">
+            <span class="btn-add col-md-3 me-5">
+                <a href="<?= Http::urlBuilder('/product/add') ?>">
+                    Додати товар +
+                </a>
+            </span>
+            <span class="btn-add col-md-3">
+                <a href="<?= Http::urlBuilder('/order/all') ?>">
+                    Переглянути замовлення +
+                </a>
+            </span>
+        </p>
+    </div>
+<?php endif ?>
 
 <?php $products = $this->getData('products') ?>
 <?php if ($products) : ?>
@@ -98,17 +103,19 @@ $maxSavedPrice = $this->getData('max');
                             <?= $product->getPrice() ?> <span>₴</span>
                         </div>
                         <div class="wrapper-links row">
-<!--                            --><?php //if (Helper::inBasket($product['id']) === 1) : ?>
-<!--                                <div class="in-basket">-->
-<!--                                    --><?//= \Core\Url::getLink('/basket/index', '<i class="bi bi-cart-check"></i>'); ?>
-<!--                                </div>-->
-<!--                            --><?php //else : ?>
+                            <?php if (Basket::inBasket($product->getId())) : ?>
+                                <div class="in-basket">
+                                    <a href="<?= Http::urlBuilder('/basket/index') ?>">
+                                        <i class="bi bi-cart-plus"></i>
+                                    </a>
+                                </div>
+                            <?php else : ?>
                                 <div class="no-basket">
                                     <a href="<?= Http::urlBuilder('/basket/add', ['id' => $product->getId()]) ?>">
                                         <i class="bi bi-cart-plus"></i>
                                     </a>
                                 </div>
-<!--                            --><?php //endif ?>
+                            <?php endif ?>
                         </div>
                     </div>
                 </div>

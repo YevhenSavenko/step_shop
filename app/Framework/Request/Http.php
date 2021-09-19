@@ -6,30 +6,53 @@ use Framework\API\Data\Request\HttpInterface;
 
 class Http implements HttpInterface
 {
-    private $data;
+    private $data = [];
 
     public function getRequest(): string
     {
         return filter_input(INPUT_SERVER, 'REQUEST_METHOD');
     }
 
+    public function getQueryParams($key = null)
+    {
+        if ($key === null) {
+            return $_GET;
+        }
+
+        return $_GET[$key];
+    }
+
+    public function getPostParams($key = null)
+    {
+        if ($key === null) {
+            return $_POST;
+        }
+
+        return $_POST[$key];
+    }
+
     public function getParams($key = null)
     {
         if ($this->getRequest() === 'GET') {
-            $this->data = $_GET;
+            $data = $this->getQueryParams($key);
+
+            if (!is_array($data)) {
+                return $data;
+            }
+
+            $this->data = array_merge($this->data, $data);
         }
 
         if ($this->getRequest() === 'POST') {
-            $this->data = $_POST;
+            $data = $this->getPostParams($key);
+
+            if (!is_array($data)) {
+                return $data;
+            }
+            $this->data = array_merge($this->data, $data);
         }
 
-        if (isset($this->data[$key])) {
-            return $this->data[$key];
-        } else if ($key === null) {
-            return $this->data;
-        } else {
-            return null;
-        }
+        return $this->data;
     }
 
     public function isAjax(): bool
@@ -55,6 +78,14 @@ class Http implements HttpInterface
 
         header("Location: $url");
         exit;
+    }
+
+    public function redirectDownload($path)
+    {
+        header('Content-type: application/xml');
+        header('Content-Disposition: attachment; filename="products.xml"');
+
+        readfile($path);
     }
 
     public static function urlBuilder($path, $params = []): string

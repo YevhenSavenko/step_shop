@@ -2,7 +2,8 @@
 
 namespace Framework\Core\Application;
 
-use Framework\Api\Traits\DataControl;
+use Framework\API\Traits\DataControl;
+use Framework\Authorization\Session;
 use Framework\MessageManager\MessageManager;
 use Model\Menu\ResourceModel\Collection\Menu;
 use Framework\Request\Route;
@@ -19,6 +20,8 @@ class Builder
 
     private $messageManager;
 
+    private $session;
+
     public function __construct($data)
     {
         $this->_data = $data;
@@ -26,6 +29,7 @@ class Builder
         $this->setData('menu', Launch::getViewDir() . \DS . 'menu.php');
         $this->setData('status', Launch::getStaticViewDir() . \DS . 'status.php');
         $this->setData('template', $this->setDefaultPath());
+        $this->session = new Session();
         $this->menuCollection = new Menu();
         $this->messageManager = new MessageManager();
     }
